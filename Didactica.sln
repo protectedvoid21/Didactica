@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Didactica", "Didactica\Didactica.csproj", "{0396F6F0-9873-4DF2-AC8C-8D004FCD2853}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Didactica.Api", "Didactica.Api\Didactica.Api.csproj", "{0396F6F0-9873-4DF2-AC8C-8D004FCD2853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
