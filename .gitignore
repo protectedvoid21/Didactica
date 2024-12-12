@@ -1,2 +1,4 @@
 .idea
 obj
+bin
+Didactica.Api/logs
