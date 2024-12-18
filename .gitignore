@@ -2,3 +2,6 @@
 obj
 bin
 Didactica.Api/logs
+Didactica.Api/bin
+Didactica.Api/obj
+Didactica.UI/node_modules
