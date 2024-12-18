@@ -3,10 +3,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Didactica.Persistence;
+namespace Didactica.Api.Persistence;
 
 public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
 {
+    
+    public DbSet<Appeal> Appeals { get; set; }
+    public DbSet<AppealStatus> AppealStatuses { get; set; }
+    public DbSet<Degree> Degrees { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<HospitationMethod> HospitationMethods { get; set; }
+    public DbSet<Hospitation> Hospitations { get; set; }
+    public DbSet<Lesson> Lessons { get; set; }
+    public DbSet<LessonType> LessonTypes { get; set; }
+    public DbSet<Semester> Semesters { get; set; }
+    public DbSet<Specialization> Specializations { get; set; }
+    
     public DidacticaDbContext(DbContextOptions<DidacticaDbContext> options) : base(options)
     {
     }

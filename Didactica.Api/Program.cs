@@ -1,4 +1,5 @@
-using Didactica.Persistence;
+using Didactica.Api.Persistence;
+using Didactica.Api.Persistence.Service;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddSerilog(config =>
 {
     config
@@ -49,3 +50,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
