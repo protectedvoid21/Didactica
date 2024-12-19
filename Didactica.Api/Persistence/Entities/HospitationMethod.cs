@@ -1,7 +1,9 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class HospitationMethod
+namespace Didactica.Persistence.Entities;
+
+public class HospitationMethod: BaseEntity
 {
-    public int Id { get; private set; }
+    [MaxLength(255)]
     public required string Name { get; set; }
 }

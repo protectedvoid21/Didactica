@@ -1,8 +1,9 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class Hospitation
+namespace Didactica.Persistence.Entities;
+
+public class Hospitation: BaseTrackingEntity
 {
-    public int Id { get; private set; }
     public DateTime HospitationDate { get; set; }
-    public HospitationMethod HospitationMethod { get; set; }
+    public required HospitationMethod HospitationMethod { get; set; }
 }

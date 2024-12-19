@@ -1,8 +1,11 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Degree
+namespace Didactica.Persistence.Entities;
+
+public class Degree: BaseEntity
 {
-    public int Id { get; private set; }
+    [MaxLength(100)]
     public required string Name { get; set; }
+    [MaxLength(100)]
     public required string Short { get; set; }
 }

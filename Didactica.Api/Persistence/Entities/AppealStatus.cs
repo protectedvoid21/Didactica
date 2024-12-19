@@ -1,7 +1,9 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class AppealStatus
+namespace Didactica.Persistence.Entities;
+
+public class AppealStatus: BaseEntity
 {
-    public int Id { get; private set; }
+    [MaxLength(100)]
     public required string Name { get; set; }
 }

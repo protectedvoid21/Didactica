@@ -1,10 +1,13 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Appeal
+namespace Didactica.Persistence.Entities;
+
+public class Appeal: BaseTrackingEntity
 {
-    public int Id { get; private set; }
     public DateOnly SubmissionDate { get; set; }
     public DateOnly ConsiderationDate { get; set; }
     public required AppealStatus Status { get; set; }
+    [MaxLength(1000)]
     public String? Justification { get; set; }
 }

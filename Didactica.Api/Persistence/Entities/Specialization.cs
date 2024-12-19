@@ -1,8 +1,10 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Specialization
+namespace Didactica.Persistence.Entities;
+
+public class Specialization: BaseEntity
 {
-    public int Id { get; private set; }
     public required Degree Degree { get; set; }
+    [MaxLength(255)]
     public string? SpecializationName { get; set; }
 }

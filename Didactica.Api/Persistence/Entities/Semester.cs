@@ -1,8 +1,10 @@
-﻿namespace Didactica.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Semester
+namespace Didactica.Persistence.Entities;
+
+public class Semester: BaseEntity
 {
-    public int Id { get; private set; }
+    [MaxLength(100)]
     public required string Name { get; set; }
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
