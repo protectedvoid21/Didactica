@@ -1,9 +1,8 @@
-﻿using Didactica.Api.Persistence.Service;
-using Didactica.Persistence.Entities;
-
+﻿using Didactica.Api.Persistence.Entities;
+using Didactica.Api.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Didactica.Api.Persistence.Controllers
+namespace Didactica.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

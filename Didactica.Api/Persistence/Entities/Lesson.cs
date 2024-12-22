@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Didactica.Persistence.Entities;
+namespace Didactica.Api.Persistence.Entities;
 
 public class Lesson: BaseEntity
 {

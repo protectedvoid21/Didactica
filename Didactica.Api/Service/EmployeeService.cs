@@ -1,6 +1,7 @@
-﻿using Didactica.Persistence.Entities;
+﻿using Didactica.Api.Persistence;
+using Didactica.Api.Persistence.Entities;
 
-namespace Didactica.Api.Persistence.Service;
+namespace Didactica.Api.Service;
 
 public class EmployeeService
 {

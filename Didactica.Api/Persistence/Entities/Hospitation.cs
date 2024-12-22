@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Didactica.Persistence.Entities;
+﻿namespace Didactica.Api.Persistence.Entities;
 
 public class Hospitation: BaseTrackingEntity
 {

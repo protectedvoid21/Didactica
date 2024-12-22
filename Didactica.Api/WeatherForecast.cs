@@ -1,4 +1,4 @@
-namespace Didactica;
+namespace Didactica.Api;
 
 public class WeatherForecast
 {

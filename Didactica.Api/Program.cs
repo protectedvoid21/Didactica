@@ -1,5 +1,5 @@
 using Didactica.Api.Persistence;
-using Didactica.Api.Persistence.Service;
+using Didactica.Api.Service;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;

@@ -1,4 +1,4 @@
-using Didactica.Persistence.Entities;
+using Didactica.Api.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

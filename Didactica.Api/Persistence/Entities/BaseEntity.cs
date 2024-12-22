@@ -1,4 +1,4 @@
-namespace Didactica.Persistence.Entities;
+namespace Didactica.Api.Persistence.Entities;
 
 public abstract class BaseEntity
 {

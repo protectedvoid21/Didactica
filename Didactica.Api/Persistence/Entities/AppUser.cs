@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Didactica.Persistence.Entities;
+namespace Didactica.Api.Persistence.Entities;
 
 public class AppUser : IdentityUser<Guid>
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Didactica.Controllers;
+namespace Didactica.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
