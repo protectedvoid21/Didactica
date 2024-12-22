@@ -4,7 +4,6 @@ namespace Didactica.Api.Persistence.Entities;
 
 public class Employee: BaseEntity
 {
-    public int Id { get; private set; }
     [MaxLength(255)]
     public required string Name { get; set; }
     

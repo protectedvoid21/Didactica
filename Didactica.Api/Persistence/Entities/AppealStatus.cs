@@ -2,7 +2,7 @@
 
 namespace Didactica.Api.Persistence.Entities;
 
-public class AppealStatus: BaseEntity
+public class AppealStatus : BaseEntity
 {
     [MaxLength(100)]
     public required string Name { get; set; }

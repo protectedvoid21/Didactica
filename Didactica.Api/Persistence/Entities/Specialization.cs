@@ -2,7 +2,7 @@
 
 namespace Didactica.Api.Persistence.Entities;
 
-public class Specialization: BaseEntity
+public class Specialization : BaseEntity
 {
     public required Degree Degree { get; set; }
     [MaxLength(255)]
