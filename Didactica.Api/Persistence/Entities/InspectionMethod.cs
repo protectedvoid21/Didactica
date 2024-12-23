@@ -2,7 +2,7 @@
 
 namespace Didactica.Api.Persistence.Entities;
 
-public class HospitationMethod : BaseEntity
+public class InspectionMethod : BaseEntity
 {
     [MaxLength(255)]
     public required string Name { get; set; }
