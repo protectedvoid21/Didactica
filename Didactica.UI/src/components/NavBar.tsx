@@ -35,9 +35,11 @@ export const NavBar = () => {
           <Menu />
         </li>
         <li>
-          <Fab color='primary' sx={{ borderRadius: '20%', boxShadow: 'none', }}>
-            <Edit />
-          </Fab>
+          <Link to={'/dodawanie-hospitacji'}>
+            <Fab color='primary' sx={{ borderRadius: '20%', boxShadow: 'none' }}>
+              <Edit />
+            </Fab>
+          </Link>
         </li>
         {elements.map((element, index) => (
           <li key={index}>

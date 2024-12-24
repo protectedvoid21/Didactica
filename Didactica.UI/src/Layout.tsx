@@ -10,7 +10,9 @@ export const Layout = () => {
       </div>
       <div className='w-3/5 mx-auto'>
         <TopBar />
-        <Outlet />
+        <div className='mt-16'>
+          <Outlet />
+        </div>
       </div>
     </div>
   );
