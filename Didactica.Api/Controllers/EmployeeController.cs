@@ -16,9 +16,9 @@ namespace Didactica.Api.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> AddEmployee([FromBody] Teacher teacher)
         {
-            await _employeeService.AddEmpleyee(employee);
+            await _employeeService.AddEmpleyee(teacher);
             return Ok(new { Message = "Employee added successfully!" });
         }
 

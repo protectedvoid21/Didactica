@@ -2,13 +2,13 @@
 
 namespace Didactica.Api.Persistence.Entities;
 
-public class Employee: BaseEntity
+public class Teacher: BaseEntity
 {
     [MaxLength(255)]
     public required string Name { get; set; }
     
     [MaxLength(255)]
-    public required string Surname { get; set; }
+    public required string LastName { get; set; }
     [MaxLength(255)]
     public string? Faculty { get; set; }
     [MaxLength(255)]

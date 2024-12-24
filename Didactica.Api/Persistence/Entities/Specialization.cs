@@ -6,5 +6,5 @@ public class Specialization : BaseEntity
 {
     public required Degree Degree { get; set; }
     [MaxLength(255)]
-    public string? SpecializationName { get; set; }
+    public string? Name { get; set; }
 }

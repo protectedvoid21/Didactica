@@ -11,15 +11,15 @@ public class EmployeeService
     {
        DbContext = dbContext;
     }
-    public async Task AddEmpleyee(Employee employee)
+    public async Task AddEmpleyee(Teacher teacher)
     {
-        await DbContext.Employees.AddAsync(employee);
+        await DbContext.Teachers.AddAsync(teacher);
         await DbContext.SaveChangesAsync();
     }
 
-    public IEnumerable<Employee> GetAllemployess()
+    public IEnumerable<Teacher> GetAllemployess()
     {
-        return DbContext.Employees.AsEnumerable();
+        return DbContext.Teachers.AsEnumerable();
 
     }
 }
