@@ -1,5 +1,9 @@
-using Didactica.Api.Persistence;
-using Didactica.Api.Service;
+using System.Reflection;
+using Carter;
+using Didactica.Application.Commands.Inspections;
+using Didactica.Application.Services;
+using Didactica.Domain.Services;
+using Didactica.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -10,7 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddInspectionCommand).Assembly));
+builder.Services.AddCarter();
+builder.Services
+    .AddScoped<IInspectionService, InspectionService>();
+
+builder.Services.AddScoped<IDbContext, DidacticaDbContext>();
+
 builder.Services.AddSerilog(config =>
 {
     config
@@ -39,10 +49,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.Map("/", () => Results.Redirect("/swagger"));
 }
 
-app.UseSerilogRequestLogging();
+app.MapCarter();
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -50,4 +62,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
