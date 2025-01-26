@@ -3,7 +3,9 @@ using FluentResults;
 
 namespace Didactica.Domain.Services;
 
-public interface ITeachersService
+public interface ITeacherService
 {
-    Task<Result<GetTeacherResponse>> GetAsync();
+    Task<Result<IEnumerable<GetTeacherResponse>>> GetAllAsync();
+    Task<Result<GetTeacherResponse>> GetByIdAsync(int teacherId);
+
 }

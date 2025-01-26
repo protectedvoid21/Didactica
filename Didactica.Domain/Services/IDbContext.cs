@@ -10,6 +10,7 @@ public interface IDbContext
     DbSet<LessonType> LessonTypes { get; set; }
     DbSet<Teacher> Teachers { get; set; }
     DbSet<InspectionMethod> InspectionMethods { get; set; }
+    DbSet<InspectionTeam> InspectionTeams { get; set; }
     DbSet<Semester> Semesters { get; set; }
     DbSet<Specialization> Specializations { get; set; }
     DbSet<Degree> Degrees { get; set; }

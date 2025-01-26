@@ -19,6 +19,7 @@ public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>,
     public DbSet<LessonType> LessonTypes { get; set; }
     public DbSet<Semester> Semesters { get; set; }
     public DbSet<Specialization> Specializations { get; set; }
+    public DbSet<InspectionTeam> InspectionTeams { get; set; }
     
     public DidacticaDbContext(DbContextOptions<DidacticaDbContext> options) : base(options)
     {

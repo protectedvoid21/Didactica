@@ -8,5 +8,6 @@ public record AddInspectionCommand(
     int InspectionMethodId,
     int TeacherId,
     bool IsRemote,
-    string? LessonEnvironment
+    string? LessonEnvironment,
+    int InspectionTypeId
 ) : IRequest<Result>;

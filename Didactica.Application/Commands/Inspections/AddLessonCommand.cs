@@ -1,6 +1,12 @@
-﻿namespace Didactica.Application.Commands.Inspections;
+﻿using FluentResults;
+using MediatR;
 
-public class AddLessonCommand
-{
-    
-}
+namespace Didactica.Application.Commands.Inspections;
+
+public record AddLessonCommand(
+        string Code,
+        string Name,
+        DateTime Date,
+        string? Room,
+        int LessonTypeId
+) : IRequest<Result>;

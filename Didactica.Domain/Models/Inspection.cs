@@ -10,4 +10,6 @@ public class Inspection : BaseTrackingEntity
     public required bool IsRemote { get; set; }
     [MaxLength(100)]
     public string? LessonEnvironment { get; set; }
+    public InspectionTeam InspectionTeam { get; set; }
+    public int InspectionTeamId { get; set; }
 }

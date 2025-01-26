@@ -1,6 +1,8 @@
-﻿namespace Didactica.Application.Commands.Inspections;
+﻿using FluentResults;
+using MediatR;
 
-public class DeleteInspectionCommand
-{
-    
-}
+namespace Didactica.Application.Commands.Inspections;
+
+public record DeleteInspectionCommand(
+    int InspectionId
+) : IRequest<Result>;

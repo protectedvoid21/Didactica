@@ -20,7 +20,9 @@ builder.Services
     .AddScoped<IInspectionService, InspectionService>();
 
 builder.Services.AddScoped<IDbContext, DidacticaDbContext>();
-
+builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<ILessonService, LessonService>();
+builder.Services.AddScoped<IInspectionTeamService, InspectionTeamService>();
 builder.Services.AddSerilog(config =>
 {
     config

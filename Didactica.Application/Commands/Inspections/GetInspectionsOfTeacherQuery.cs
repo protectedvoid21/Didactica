@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Didactica.Application.Commands.Inspections;
 
-public record GetInspectionsOfTeacher(int Id) : IRequest<Result<IEnumerable<GetInspectionResponse>>>;
+public record GetInspectionsOfTeacherQuery(int Id) : IRequest<Result<IEnumerable<GetInspectionResponse>>>;
 
 public class GetInspectionsOfTeacherHandler(IInspectionService inspectionService)
-    : IRequestHandler<GetInspectionQuery, Result<GetInspectionResponse>>
+    : IRequestHandler<GetInspectionsOfTeacherQuery, Result<IEnumerable<GetInspectionResponse>>>
 {
-    public async Task<Result<GetInspectionResponse>> Handle(GetInspectionsOfTeacher request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<GetInspectionResponse>>> Handle(GetInspectionsOfTeacherQuery request, CancellationToken cancellationToken)
     {
-        return await inspectionService.GetAsync(request.Id);
+        return await inspectionService.GetInspectionsOfTeacherById(request.Id);
     }
 }

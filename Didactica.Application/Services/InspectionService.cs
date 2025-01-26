@@ -20,6 +20,7 @@ public class InspectionService : IInspectionService
         var inspection = await _dbContext.Inspections.Select(h => new GetInspectionResponse
         {
             Id = h.Id,
+            TeacherId = h.Teacher.Id,
             TeacherFirstName = h.Teacher.Name,
             TeacherLastName = h.Teacher.LastName,
             Course = h.Lesson.Name,
@@ -28,6 +29,11 @@ public class InspectionService : IInspectionService
             IsRemote = h.IsRemote,
             LessonEnvironment = h.LessonEnvironment,
             Place = h.Lesson.Room,
+            GetInspectionTeamResponse = new GetInspectionTeamResponse
+            {
+                Id = h.InspectionTeam.Id,
+                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray(),
+            }
         }).FirstOrDefaultAsync(h => h.Id == id);
         
         if (inspection == null)
@@ -67,5 +73,65 @@ public class InspectionService : IInspectionService
         });
         await _dbContext.SaveChangesAsync();
         return Result.Ok().WithSuccess("Inspection added successfully");
+    }
+    
+    public async Task<Result> DeleteAsync(DeleteInspectionRequest request)
+    {
+        var inspection = await _dbContext.Inspections.FirstOrDefaultAsync(h => h.Id == request.InspectionId);
+        if (inspection == null)
+        {
+            return Result.Fail("Inspection not found");
+        }
+        
+        _dbContext.Inspections.Remove(inspection);
+        await _dbContext.SaveChangesAsync();
+        return Result.Ok().WithSuccess("Inspection deleted successfully");
+    }
+
+    public async Task<Result<IEnumerable<GetInspectionResponse>>> GetInspectionsOfTeacherById(int teacherId)
+    {
+        var inspections = await _dbContext.Inspections.Select(h => new GetInspectionResponse
+        {
+            Id = h.Id,
+            TeacherId = h.Teacher.Id,
+            TeacherFirstName = h.Teacher.Name,
+            TeacherLastName = h.Teacher.LastName,
+            Course = h.Lesson.Name, 
+            CourseType = h.Lesson.LessonType.Name,
+            Date = h.Lesson.Date,
+            IsRemote = h.IsRemote,
+            LessonEnvironment = h.LessonEnvironment,
+            Place = h.Lesson.Room,
+            GetInspectionTeamResponse = new GetInspectionTeamResponse
+            {
+                Id = h.InspectionTeam.Id,
+                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray(),
+            }
+        }).Where(h => h.Id == teacherId).ToListAsync();
+        return inspections;
+    }
+
+    public async Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPLanedInspections()
+    {
+        var inspections = await _dbContext.Inspections.Select(h => new GetInspectionResponse
+        {
+            Id = h.Id,
+            TeacherId = h.Teacher.Id,
+            TeacherFirstName = h.Teacher.Name,
+            TeacherLastName = h.Teacher.LastName,
+            Course = h.Lesson.Name,
+            CourseType = h.Lesson.LessonType.Name,
+            Date = h.Lesson.Date,
+            IsRemote = h.IsRemote,
+            LessonEnvironment = h.LessonEnvironment,
+            Place = h.Lesson.Room,
+            GetInspectionTeamResponse = new GetInspectionTeamResponse
+            {
+                Id = h.InspectionTeam.Id,
+                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray(),
+            }
+        }).Where(h => h.Date > DateTime.UtcNow).ToListAsync();
+        
+        return inspections;
     }
 }

@@ -22,7 +22,7 @@ namespace Didactica.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.AppUser", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Appeal", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Appeal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,8 +121,7 @@ namespace Didactica.Api.Migrations
                         .HasColumnName("created_on");
 
                     b.Property<string>("Justification")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
+                        .HasColumnType("text")
                         .HasColumnName("justification");
 
                     b.Property<int>("StatusId")
@@ -146,7 +145,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("appeals", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.AppealStatus", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.AppealStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +166,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("appeal_statuses", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Degree", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Degree", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,7 +193,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("degrees", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Inspection", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Inspection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,6 +209,10 @@ namespace Didactica.Api.Migrations
                     b.Property<int>("InspectionMethodId")
                         .HasColumnType("integer")
                         .HasColumnName("inspection_method_id");
+
+                    b.Property<int>("InspectionTeamId")
+                        .HasColumnType("integer")
+                        .HasColumnName("inspection_team_id");
 
                     b.Property<bool>("IsRemote")
                         .HasColumnType("boolean")
@@ -238,6 +241,9 @@ namespace Didactica.Api.Migrations
                     b.HasIndex("InspectionMethodId")
                         .HasDatabaseName("ix_inspections_inspection_method_id");
 
+                    b.HasIndex("InspectionTeamId")
+                        .HasDatabaseName("ix_inspections_inspection_team_id");
+
                     b.HasIndex("LessonId")
                         .HasDatabaseName("ix_inspections_lesson_id");
 
@@ -247,7 +253,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("inspections", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.InspectionMethod", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.InspectionMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,7 +274,30 @@ namespace Didactica.Api.Migrations
                     b.ToTable("inspection_methods", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Lesson", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.InspectionTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_on");
+
+                    b.HasKey("Id")
+                        .HasName("pk_inspection_teams");
+
+                    b.ToTable("inspection_teams", (string)null);
+                });
+
+            modelBuilder.Entity("Didactica.Domain.Models.Lesson", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,7 +340,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("lessons", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.LessonType", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.LessonType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -332,7 +361,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("lesson_types", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Semester", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Semester", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -361,7 +390,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("semesters", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Specialization", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Specialization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -388,7 +417,7 @@ namespace Didactica.Api.Migrations
                     b.ToTable("specializations", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Teacher", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -406,6 +435,10 @@ namespace Didactica.Api.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("faculty");
+
+                    b.Property<int?>("InspectionTeamId")
+                        .HasColumnType("integer")
+                        .HasColumnName("inspection_team_id");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -426,6 +459,9 @@ namespace Didactica.Api.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_teachers");
+
+                    b.HasIndex("InspectionTeamId")
+                        .HasDatabaseName("ix_teachers_inspection_team_id");
 
                     b.ToTable("teachers", (string)null);
                 });
@@ -592,9 +628,9 @@ namespace Didactica.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Appeal", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Appeal", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.AppealStatus", "Status")
+                    b.HasOne("Didactica.Domain.Models.AppealStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -604,23 +640,30 @@ namespace Didactica.Api.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Inspection", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Inspection", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.InspectionMethod", "InspectionMethod")
+                    b.HasOne("Didactica.Domain.Models.InspectionMethod", "InspectionMethod")
                         .WithMany()
                         .HasForeignKey("InspectionMethodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_inspections_inspection_methods_inspection_method_id");
 
-                    b.HasOne("Didactica.Api.Persistence.Entities.Lesson", "Lesson")
+                    b.HasOne("Didactica.Domain.Models.InspectionTeam", "InspectionTeam")
+                        .WithMany("Inspections")
+                        .HasForeignKey("InspectionTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_inspections_inspection_teams_inspection_team_id");
+
+                    b.HasOne("Didactica.Domain.Models.Lesson", "Lesson")
                         .WithMany()
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_inspections_lessons_lesson_id");
 
-                    b.HasOne("Didactica.Api.Persistence.Entities.Teacher", "Teacher")
+                    b.HasOne("Didactica.Domain.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -629,14 +672,16 @@ namespace Didactica.Api.Migrations
 
                     b.Navigation("InspectionMethod");
 
+                    b.Navigation("InspectionTeam");
+
                     b.Navigation("Lesson");
 
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Lesson", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Lesson", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.LessonType", "LessonType")
+                    b.HasOne("Didactica.Domain.Models.LessonType", "LessonType")
                         .WithMany()
                         .HasForeignKey("LessonTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -646,9 +691,9 @@ namespace Didactica.Api.Migrations
                     b.Navigation("LessonType");
                 });
 
-            modelBuilder.Entity("Didactica.Api.Persistence.Entities.Specialization", b =>
+            modelBuilder.Entity("Didactica.Domain.Models.Specialization", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.Degree", "Degree")
+                    b.HasOne("Didactica.Domain.Models.Degree", "Degree")
                         .WithMany()
                         .HasForeignKey("DegreeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -656,6 +701,14 @@ namespace Didactica.Api.Migrations
                         .HasConstraintName("fk_specializations_degrees_degree_id");
 
                     b.Navigation("Degree");
+                });
+
+            modelBuilder.Entity("Didactica.Domain.Models.Teacher", b =>
+                {
+                    b.HasOne("Didactica.Domain.Models.InspectionTeam", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("InspectionTeamId")
+                        .HasConstraintName("fk_teachers_inspection_teams_inspection_team_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -670,7 +723,7 @@ namespace Didactica.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.AppUser", null)
+                    b.HasOne("Didactica.Domain.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -680,7 +733,7 @@ namespace Didactica.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.AppUser", null)
+                    b.HasOne("Didactica.Domain.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -697,7 +750,7 @@ namespace Didactica.Api.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
 
-                    b.HasOne("Didactica.Api.Persistence.Entities.AppUser", null)
+                    b.HasOne("Didactica.Domain.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -707,12 +760,19 @@ namespace Didactica.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Didactica.Api.Persistence.Entities.AppUser", null)
+                    b.HasOne("Didactica.Domain.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Didactica.Domain.Models.InspectionTeam", b =>
+                {
+                    b.Navigation("Inspections");
+
+                    b.Navigation("Teachers");
                 });
 #pragma warning restore 612, 618
         }

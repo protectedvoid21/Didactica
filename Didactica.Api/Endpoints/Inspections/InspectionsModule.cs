@@ -22,10 +22,33 @@ public class InspectionsModule : ICarterModule
                 return Results.BadRequest(result.ToApiResponse());
             }
 
-            return Results.Created($"/inspections/{2137}", result.ToApiResponse()); // 2137 is a placeholder
+            return Results.Created($"/inspections/{1}", result.ToApiResponse());
         });
         
         endpoints.MapGet("{id}", async (IMediator mediator, [AsParameters] GetInspectionQuery query) =>
+        {
+            var result = await mediator.Send(query);
+            return Results.Ok(result.ToApiResponse());
+        });
+        
+        endpoints.MapDelete("{id}", async (IMediator mediator, [FromBody] DeleteInspectionCommand command) =>
+        {
+            var result = await mediator.Send(command);
+            if (result.IsFailed)
+            {
+                return Results.BadRequest(result.ToApiResponse());
+            }
+
+            return Results.NoContent();
+        });
+
+        endpoints.MapGet("/teachers/{teacherId}", async (IMediator mediator, [AsParameters] GetInspectionsOfTeacherQuery query) =>
+        {
+            var result = await mediator.Send(query);
+            return Results.Ok(result.ToApiResponse());
+        });
+
+        endpoints.MapGet("/planned", async (IMediator mediator,[AsParameters] GetPlannedInspectionsQuery query) =>
         {
             var result = await mediator.Send(query);
             return Results.Ok(result.ToApiResponse());
