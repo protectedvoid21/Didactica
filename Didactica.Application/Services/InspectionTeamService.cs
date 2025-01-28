@@ -5,7 +5,7 @@ using FluentResults;
 
 namespace Didactica.Application.Services;
 
-public class InspectionTeamService: IInspectionTeamService
+public class InspectionTeamService : IInspectionTeamService
 {
     private readonly IDbContext _dbContext;
     
