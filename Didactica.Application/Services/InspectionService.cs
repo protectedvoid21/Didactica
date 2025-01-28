@@ -43,6 +43,34 @@ public class InspectionService : IInspectionService
         return inspection;
     }
 
+    public async Task<Result<List<GetInspectionResponse>>> GetInspectionsForTeacherAsync(int teacherId, CancellationToken ct)
+    {
+        var teacher = await _dbContext.Teachers.FirstOrDefaultAsync(h => h.Id == teacherId, ct);
+        if (teacher == null)
+        {
+            return Result.Fail("Teacher not found");
+        }
+        
+        var inspections = await _dbContext.Inspections
+            .Where(h => h.Teacher.Id == teacherId)
+            .Select(h => new GetInspectionResponse
+            {
+                Id = h.Id,
+                TeacherFirstName = h.Teacher.Name,
+                TeacherLastName = h.Teacher.LastName,
+                Course = h.Lesson.Name,
+                CourseType = h.Lesson.LessonType.Name,
+                Date = h.Lesson.Date,
+                IsRemote = h.IsRemote,
+                LessonEnvironment = h.LessonEnvironment,
+                Place = h.Lesson.Room,
+                TeacherId = 0,
+                GetInspectionTeamResponse = null,
+            }).ToListAsync(ct);
+        
+        return Result.Ok(inspections);
+    }
+
     public async Task<Result> AddAsync(CreateInspectionRequest request)
     {
         var teacher = await _dbContext.Teachers.FirstOrDefaultAsync(h => h.Id == request.TeacherId);
@@ -57,19 +85,12 @@ public class InspectionService : IInspectionService
             return Result.Fail("Lesson not found");
         }
         
-        var inspectionMethod = await _dbContext.InspectionMethods.FirstOrDefaultAsync(h => h.Id == request.InspectionMethodId);
-        if (inspectionMethod == null)
-        {
-            return Result.Fail("Inspection method not found");
-        }
-        
         _dbContext.Inspections.Add(new Inspection
         {
             Teacher = teacher,
             Lesson = lesson,
             IsRemote = request.IsRemote,
             LessonEnvironment = request.LessonEnvironment,
-            InspectionMethod = inspectionMethod,
         });
         await _dbContext.SaveChangesAsync();
         return Result.Ok().WithSuccess("Inspection added successfully");
@@ -133,5 +154,34 @@ public class InspectionService : IInspectionService
         }).Where(h => h.Date > DateTime.UtcNow).ToListAsync();
         
         return inspections;
+    }
+    
+    public async Task<Result> AddFormAsync(AddInspectionFormRequest request)
+    {
+        var inspection = await _dbContext.Inspections.FirstOrDefaultAsync(h => h.Id == request.InspectionId);
+        if (inspection == null)
+        {
+            return Result.Fail("Inspection not found");
+        }
+        
+        _dbContext.InspectionForms.Add(new InspectionForm
+        {
+            InspectionId = inspection.Id,
+            WasAttendanceChecked = request.WasAttendanceChecked,
+            WereClassesOnTime = request.WereClassesOnTime,
+            WasRoomSuitable = request.WasRoomSuitable,
+            PresentedTopicAndScope = request.PresentedTopicAndScope,
+            ExplainedClearly = request.ExplainedClearly,
+            WasEngaged = request.WasEngaged,
+            EncouragedIndependentThinking = request.EncouragedIndependentThinking,
+            MaintainedDocumentation = request.MaintainedDocumentation,
+            DeliveredUpdatedKnowledge = request.DeliveredUpdatedKnowledge,
+            PresentedPreparedMaterial = request.PresentedPreparedMaterial,
+            FinalGradeJustification = request.FinalGradeJustification,
+            ConclusionsAndRecommendations = request.ConclusionsAndRecommendations,
+            FinalGrade = request.FinalGrade,
+        });
+        await _dbContext.SaveChangesAsync();
+        return Result.Ok().WithSuccess("Inspection form added successfully");
     }
 }

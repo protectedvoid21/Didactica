@@ -2,7 +2,6 @@
 using Didactica.Domain.Dto;
 using Didactica.Domain.Services;
 using FluentResults;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Didactica.Application.Services;

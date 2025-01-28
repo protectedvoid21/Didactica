@@ -6,10 +6,10 @@ namespace Didactica.Domain.Services;
 public interface IDbContext
 {
     DbSet<Inspection> Inspections { get; set; }
+    DbSet<InspectionForm> InspectionForms { get; set; }
     DbSet<Lesson> Lessons { get; set; }
     DbSet<LessonType> LessonTypes { get; set; }
     DbSet<Teacher> Teachers { get; set; }
-    DbSet<InspectionMethod> InspectionMethods { get; set; }
     DbSet<InspectionTeam> InspectionTeams { get; set; }
     DbSet<Semester> Semesters { get; set; }
     DbSet<Specialization> Specializations { get; set; }

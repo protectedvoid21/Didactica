@@ -2,6 +2,7 @@ using System.Net;
 using Carter;
 using Didactica.Application.Commands;
 using Didactica.Application.Commands.Inspections;
+using Didactica.Application.Commands.Inspections.Add;
 using Didactica.Application.Common.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,6 @@ public class InspectionsModule : ICarterModule
             }
 
             return Results.Created($"/inspections/{1}", result.ToApiResponse());
-        });
-        
-        endpoints.MapGet("{id}", async (IMediator mediator, [AsParameters] GetInspectionQuery query) =>
-        {
-            var result = await mediator.Send(query);
-            return Results.Ok(result.ToApiResponse());
         });
         
         endpoints.MapDelete("{id}", async (IMediator mediator, [FromBody] DeleteInspectionCommand command) =>

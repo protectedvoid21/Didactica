@@ -1,7 +1,7 @@
 using FluentResults;
 using MediatR;
 
-namespace Didactica.Application.Commands.Inspections;
+namespace Didactica.Application.Commands.Inspections.Add;
 
 public record AddInspectionCommand(
     int LessonId,

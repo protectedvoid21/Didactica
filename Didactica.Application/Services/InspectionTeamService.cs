@@ -2,7 +2,6 @@
 using Didactica.Domain.Models;
 using Didactica.Domain.Services;
 using FluentResults;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Didactica.Application.Services;
 
@@ -17,8 +16,6 @@ public class InspectionTeamService: IInspectionTeamService
 
     public async Task<Result> AddAsync(CreateInspectionTeamRequest request)
     {
-        var teachers = new List<Teacher>();
-
         var inspectionTeam = new InspectionTeam(); 
         foreach (var id in request.TeacherIds)
         {

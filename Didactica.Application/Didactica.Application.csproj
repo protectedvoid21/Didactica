@@ -23,6 +23,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Didactica.Domain\Didactica.Domain.csproj" />
+      <ProjectReference Include="..\Didactica.Infrastructure\Didactica.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bogus" Version="35.6.1" />
     </ItemGroup>
 
 </Project>

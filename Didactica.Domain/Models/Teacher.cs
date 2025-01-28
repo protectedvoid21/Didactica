@@ -15,4 +15,6 @@ public class Teacher : BaseEntity
     public string? Email { get; set; }
     [MaxLength(20)]
     public string? PhoneNumber { get; set; }
+    
+    public ICollection<InspectionTeam> InspectionTeams { get; set; } = [];
 }

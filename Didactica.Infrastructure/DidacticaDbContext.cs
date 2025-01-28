@@ -8,18 +8,17 @@ namespace Didactica.Infrastructure;
 
 public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IDbContext
 {
-    
     public DbSet<Appeal> Appeals { get; set; }
     public DbSet<AppealStatus> AppealStatuses { get; set; }
     public DbSet<Degree> Degrees { get; set; }
     public DbSet<Teacher> Teachers { get; set; }
-    public DbSet<InspectionMethod> InspectionMethods { get; set; }
     public DbSet<Inspection> Inspections { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<LessonType> LessonTypes { get; set; }
     public DbSet<Semester> Semesters { get; set; }
     public DbSet<Specialization> Specializations { get; set; }
     public DbSet<InspectionTeam> InspectionTeams { get; set; }
+    public DbSet<InspectionForm> InspectionForms { get; set; }
     
     public DidacticaDbContext(DbContextOptions<DidacticaDbContext> options) : base(options)
     {

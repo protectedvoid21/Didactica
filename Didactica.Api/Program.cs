@@ -1,6 +1,7 @@
 using System.Reflection;
 using Carter;
 using Didactica.Application.Commands.Inspections;
+using Didactica.Application.Commands.Inspections.Add;
 using Didactica.Application.Services;
 using Didactica.Domain.Services;
 using Didactica.Infrastructure;
@@ -34,7 +35,11 @@ builder.Services.AddSerilog(config =>
 });
 
 
-builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnectionString("Didactica"), null,
+builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnectionString("Didactica"), 
+    options =>
+    {
+        options.MigrationsAssembly(typeof(DidacticaDbContext).Assembly);
+    },
     dbBuilder =>
     {
         dbBuilder.UseSnakeCaseNamingConvention();
