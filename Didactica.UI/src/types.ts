@@ -1,4 +1,4 @@
-export type IncidentFormRequest = {
+export type InspectionFormRequest = {
   inspectionId: number;
   wereClassesOnTime: boolean;
   wasAttendanceChecked: boolean;

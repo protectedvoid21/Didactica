@@ -1,31 +1,41 @@
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
 
-interface Props {
+type Props = {
+  field: {
+    value: string | number;
+    onChange: (value: any) => void;
+  };
   labels: string[];
-  onValueChange: (value: number) => void;
-}
+};
 
-export const RadioScaleInput = ({ labels, onValueChange }: Props) => {
+export const RadioScaleInput = ({ field, labels }: Props) => {
   return (
-    <RadioGroup row className='my-4'>
-      {labels.map((label, index) =>
+    <RadioGroup
+      row
+      {...field}
+      value={field.value}
+      onChange={field.onChange}
+      className="my-4"
+    >
+      {labels.map((label, index) => (
         <FormControlLabel
+          key={label + '-label-' + index}
+          value={index.toString()}
           control={
             <Radio
-              key={index}
+              key={label + '-radio-' + index}
               value={index}
               sx={{ padding: '0.25rem' }}
-              onChange={() => onValueChange(index)}
-            />}
+            />
+          }
           label={label}
-          labelPlacement='bottom'
+          labelPlacement="bottom"
         />
-      )}
+      ))}
     </RadioGroup>
-  )
-}
-
-export const RadioScoreInput = ({ onValueChange }: { onValueChange: (value: number) => void }) => {
+  );
+};
+export const RadioScoreInput = (field: { value: string | number, onChange: (value: any) => void }) => {
   const labels = ['5.5', '5', '4', '3', '2', '0'];
-  return <RadioScaleInput labels={labels} onValueChange={onValueChange} />;
+  return <RadioScaleInput labels={labels} field={field} />;
 }

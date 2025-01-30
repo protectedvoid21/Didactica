@@ -1,91 +1,76 @@
 import { TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import { RadioScoreInput } from '../components/RadioScaleInput';
+import { InspectionFormRequest } from '../types';
 
-type FormControlLabelProps = {
+type FormControlLabelProps<T> = {
   label?: string;
-  control: JSX.Element;
-  labelPlacement?: 'end' | 'start' | 'top' | 'bottom';
+  modelSelector: keyof T;
 }
 
-export const CustomCheckbox = () => <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: '1.rem' } }} />;
+export const CustomCheckbox = (props: any) =>
+  <Checkbox
+    {...props}
 
-export const classesFormFields: FormControlLabelProps[] = [
+  />;
+
+export const classesFormFields: FormControlLabelProps<InspectionFormRequest>[] = [
   {
     label: 'Czy zajęcia rozpoczęły się punktualnie?',
-    control: <CustomCheckbox />
+    modelSelector: 'wereClassesOnTime'
   },
   {
     label: 'Czy sprawdzono obecność studentów?',
-    control: <CustomCheckbox />
+    modelSelector: 'wasAttendanceChecked'
   },
   {
     label: 'Czy sala i jej wyposażenie są przystosowane do formy prowadzonych zajęć?',
-    control: <CustomCheckbox />
+    modelSelector: 'wasRoomSuitable'
   }
 ];
 
-export const teacherFormFields: FormControlLabelProps[] = [
+export const teacherFormFields: FormControlLabelProps<InspectionFormRequest>[] = [
   {
     label: 'Przedstawił temat, cel i zakres zajęć',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'presentedTopicAndScope'
   },
   {
     label: 'Wyjaśniał w zrozumiały sposób omawiane zagadnienia',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'explainedClearly'
   },
   {
     label: 'Realizował zajęcia z zaangażowaniem',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'wasEngaged'
   },
   {
     label: 'Inspirował studentów do samodzielnego myślenia (stawiania pytań, dyskusji, samodzielnego rozwiązywania problemów/zadań itp.)',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'encouragedIndependentThinking'
   },
   {
     label: 'Prowadził dokumentację zajęć (lista obecności, lista ocen, sprawozdania, prace kontrolne itp.)',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'maintainedDocumentation'
   },
   {
     label: 'Przekazywał aktualną wiedzę',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'deliveredUpdatedKnowledge'
   },
   {
     label: 'Przedstawiał materiał, który był przygotowany i uporządkowany',
-    control: <RadioScoreInput onValueChange={() => { }} />,
-    labelPlacement: 'top'
+    modelSelector: 'presentedPreparedMaterial'
   },
 ];
 
-export const summaryFormFields: FormControlLabelProps[] = [
+export const summaryFormFields: FormControlLabelProps<InspectionFormRequest>[] = [
   {
-    control: <TextField
-      rows={4}
-      multiline
-      value=' '
-      label={'Uzasadnienie oceny końcowej'}
-    />
+    label: 'Uzasadnienie oceny końcowej',
+    modelSelector: 'finalGradeJustification'
   },
   {
-    control: <TextField
-      rows={4}
-      multiline
-      value=' '
-      label={'Wnioski i zalecenia'}
-    />
+    label: 'Wnioski i zalecenia',
+    modelSelector: 'conclusionsAndRecommendations'
   },
   {
-    control: <TextField
-      rows={4}
-      multiline
-      value=' '
-      label={'Ocena końcowa'}
-    />
+    label: 'Ocena końcowa',
+    modelSelector: 'finalGrade'
   }
 ];
