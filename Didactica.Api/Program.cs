@@ -1,6 +1,4 @@
-using System.Reflection;
 using Carter;
-using Didactica.Application.Commands.Inspections;
 using Didactica.Application.Commands.Inspections.Add;
 using Didactica.Application.Services;
 using Didactica.Domain.Services;
@@ -8,6 +6,7 @@ using Didactica.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +33,7 @@ builder.Services.AddSerilog(config =>
         .Enrich.FromLogContext();
 });
 
-
-builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnectionString("Didactica"), 
+builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnectionString("Didactica"),
     options =>
     {
         options.MigrationsAssembly(typeof(DidacticaDbContext).Assembly);

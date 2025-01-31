@@ -1,5 +1,8 @@
 namespace Didactica.Domain.Dto;
 
+/// <summary>
+/// Represents a request to add an inspection form, capturing relevant inspection details and evaluations.
+/// </summary>
 public record AddInspectionFormRequest
 {
     public required int InspectionId { get; init; }

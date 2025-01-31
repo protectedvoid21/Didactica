@@ -1,12 +1,21 @@
 using Carter;
-using Didactica.Application.Commands.InspectionForms.Submit;
+using Didactica.Application.Commands.InspectionForms.Add;
 using Didactica.Application.Common.Extensions;
 using MediatR;
 
 namespace Didactica.Api.Endpoints.Inspections;
 
+/// <summary>
+/// Represents a module responsible for defining endpoints related to inspection forms.
+/// This class implements the <see cref="ICarterModule"/> interface, which allows
+/// configuration of HTTP routes for the inspection forms functionality.
+/// </summary>
 public class InspectionFormsModule : ICarterModule
 {
+	/// Adds the routes for the Inspection Forms module to the application endpoint route builder.
+	/// <param name="app">
+	/// The endpoint route builder used to define route mappings for the application.
+	/// </param>
 	public void AddRoutes(IEndpointRouteBuilder app)
 	{
 		var endpoints = app.MapGroup("inspection-forms");

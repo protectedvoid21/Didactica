@@ -22,10 +22,9 @@ public class AddInspectionHandler : IRequestHandler<AddInspectionCommand, Result
             InspectionMethodId = request.InspectionMethodId,
             TeacherId = request.TeacherId,
             IsRemote = request.IsRemote,
-            LessonEnvironment = request.LessonEnvironment,
+            LessonEnvironment = request.LessonEnvironment
         });
         
         return addResult;
     }
-    
 }

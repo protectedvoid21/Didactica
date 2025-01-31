@@ -6,8 +6,17 @@ using MediatR;
 
 namespace Didactica.Api.Endpoints.Lessons;
 
+/// <summary>
+/// The LessonsModule class defines HTTP endpoints for managing lessons in the system.
+/// It implements the ICarterModule interface to configure routing and handling of
+/// incoming requests related to lessons.
+/// </summary>
 public class LessonsModule : ICarterModule
 {
+    /// <summary>
+    /// Configures endpoint routes for the lessons module in the API.
+    /// </summary>
+    /// <param name="app">An instance of <see cref="IEndpointRouteBuilder"/> used to define routes and endpoints.</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         var endpoints = app.MapGroup("lessons");

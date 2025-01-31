@@ -1,5 +1,4 @@
-﻿using Didactica.Application.Services;
-using Didactica.Domain.Dto;
+﻿using Didactica.Domain.Dto;
 using Didactica.Domain.Services;
 using FluentResults;
 using MediatR;
@@ -14,11 +13,9 @@ public class AddLessonHandler(ILessonService lessonService): IRequestHandler<Add
         {
             LessonTypeId = request.LessonTypeId,
             Code = request.Code,
-            Name = request.Name, 
+            Name = request.Name,
             Room = request.Room
         });
-        
         return addResult;
     }
-    
 }

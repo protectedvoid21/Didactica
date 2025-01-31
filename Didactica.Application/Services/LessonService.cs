@@ -36,7 +36,7 @@ public class LessonService : ILessonService
             return Result.Fail("Lesson type not found");
         }
 
-        var lesson = _dbContext.Lessons.Add(new Lesson
+        _dbContext.Lessons.Add(new Lesson
         {
             LessonType = lessonType,
             Code = request.Code,

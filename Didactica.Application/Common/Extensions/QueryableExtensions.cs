@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Didactica.Application.Common.Extensions;
 
-public static class QueryableExtensions
+public static class ueryableExtensions
 {
     public static async Task<PaginationResponse<T>> ToPaginationResponseAsync<T>(this IQueryable<T> query, int page, int pageSize)
     {

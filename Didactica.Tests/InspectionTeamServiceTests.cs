@@ -2,6 +2,7 @@ using Didactica.Application.Services;
 using Didactica.Domain.Dto;
 using Didactica.Domain.Models;
 using Didactica.Domain.Services;
+using MockQueryable.NSubstitute;
 using NSubstitute;
 using Shouldly;
 
@@ -9,8 +10,8 @@ namespace Didactica.Tests;
 
 public class InspectionTeamServiceTests
 {
-    private readonly InspectionTeamService _inspectionTeamService;
     private readonly IDbContext _dbContext = Substitute.For<IDbContext>();
+    private readonly InspectionTeamService _inspectionTeamService;
     
     public InspectionTeamServiceTests()
     {
@@ -21,8 +22,9 @@ public class InspectionTeamServiceTests
     public async Task Add_NewInspectionTeamWithNotExistingTeacher_ReturnsFail()
     {
         // Arrange
-        var teacherDbSet = TestHelper.GetQueryableMockDbSet(new List<Teacher>());
-        _dbContext.Teachers.Returns(teacherDbSet);
+        var teacherList = new List<Teacher>();
+        var mock = teacherList.AsQueryable().BuildMockDbSet();
+        _dbContext.Teachers.Returns(mock);
         
         // Act
         var result = await _inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
@@ -38,8 +40,8 @@ public class InspectionTeamServiceTests
     public async Task Add_NewInspectionTeamWithExistingTeacher_ReturnsSuccess()
     {
         // Arrange
-        var teacherDbSet = TestHelper.GetQueryableMockDbSet([
-            new Teacher
+        var teacherList = new List<Teacher>{
+            new()
             {
                 Id = 1,
                 Name = "John",
@@ -47,9 +49,10 @@ public class InspectionTeamServiceTests
                 Email = "jdoe@uni.com",
                 PhoneNumber = "123456789",
                 Faculty = "Math"
-            },
-        ]);
-        _dbContext.Teachers.Returns(teacherDbSet);
+            }
+        };
+        var mock = teacherList.AsQueryable().BuildMockDbSet();
+        _dbContext.Teachers.Returns(mock);
         
         // Act
         var result = await _inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
@@ -65,8 +68,8 @@ public class InspectionTeamServiceTests
     public async Task Add_NewInspectionTeamWithExistingTeacherAndNonExistingAtOnce_ReturnsFail()
     {
         // Arrange
-        var teacherDbSet = TestHelper.GetQueryableMockDbSet([
-            new Teacher
+        var teacherList = new List<Teacher>{
+            new()
             {
                 Id = 1,
                 Name = "John",
@@ -75,8 +78,9 @@ public class InspectionTeamServiceTests
                 PhoneNumber = "123456789",
                 Faculty = "Math"
             },
-        ]);
-        _dbContext.Teachers.Returns(teacherDbSet);
+        };
+        var mock = teacherList.AsQueryable().BuildMockDbSet();
+        _dbContext.Teachers.Returns(mock);
         
         // Act
         var result = await _inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
@@ -92,8 +96,8 @@ public class InspectionTeamServiceTests
     public async Task Add_NewInspectionTeamWithMultiplePresentTeachers_ReturnsSuccess()
     {
         // Arrange
-        var teacherDbSet = TestHelper.GetQueryableMockDbSet([
-            new Teacher
+        var teacherList = new List<Teacher>{
+            new()
             {
                 Id = 1,
                 Name = "John",
@@ -102,7 +106,7 @@ public class InspectionTeamServiceTests
                 PhoneNumber = "123456789",
                 Faculty = "Math"
             },
-            new Teacher
+            new()
             {
                 Id = 2,
                 Name = "Jane",
@@ -111,7 +115,7 @@ public class InspectionTeamServiceTests
                 PhoneNumber = "987654321",
                 Faculty = "Physics"
             },
-            new Teacher
+            new()
             {
                 Id = 3,
                 Name = "Alice",
@@ -119,9 +123,10 @@ public class InspectionTeamServiceTests
                 Email = "asmith@uni.com",
                 PhoneNumber = "456123789",
                 Faculty = "Chemistry"
-            },
-        ]);
-        _dbContext.Teachers.Returns(teacherDbSet);
+            }
+        };
+        var mock = teacherList.AsQueryable().BuildMockDbSet();
+        _dbContext.Teachers.Returns(mock);
         
         // Act
         var result = await _inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
@@ -131,5 +136,22 @@ public class InspectionTeamServiceTests
         
         // Assert
         result.IsSuccess.ShouldBeTrue();
+    }
+    [Fact]
+    public async Task Add_NewInspectionTeamWithNoTeachersProvided_ReturnsFalse()
+    {
+        // Arrange
+        var teacherList = new List<Teacher>();
+        var mock = teacherList.AsQueryable().BuildMockDbSet();
+        _dbContext.Teachers.Returns(mock);
+        
+        // Act
+        var result = await _inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
+        {
+            TeacherIds = []
+        });
+        
+        // Assert
+        result.IsSuccess.ShouldBeFalse();
     }
 }

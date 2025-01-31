@@ -1,5 +1,8 @@
 ﻿namespace Didactica.Domain.Dto;
 
+/// <summary>
+/// Represents the response model for retrieving a teacher's information.
+/// </summary>
 public class GetTeacherResponse
 {
     public required int Id { get; set; }

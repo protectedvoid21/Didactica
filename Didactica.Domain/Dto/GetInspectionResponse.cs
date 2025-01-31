@@ -1,7 +1,12 @@
-using Didactica.Domain.Models;
-
 namespace Didactica.Domain.Dto;
 
+/// <summary>
+/// Represents the response format containing details of an inspection.
+/// </summary>
+/// <remarks>
+/// This class encapsulates the information related to an inspection such as the teacher,
+/// course details, inspection specifics, and associated inspection team data, if any.
+/// </remarks>
 public class GetInspectionResponse
 {
     public required int Id { get; set; }
@@ -14,5 +19,5 @@ public class GetInspectionResponse
     public required bool IsRemote { get; set; }
     public required string? LessonEnvironment { get; set; }
     public required string? Place { get; set; }
-    public required GetInspectionTeamResponse GetInspectionTeamResponse { get; set; }
+    public required GetInspectionTeamResponse? GetInspectionTeamResponse { get; set; }
 }

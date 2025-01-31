@@ -3,6 +3,9 @@ using FluentResults;
 
 namespace Didactica.Domain.Services;
 
+/// <summary>
+/// Provides operations related to lesson management.
+/// </summary>
 public interface ILessonService
 {
     Task<Result<IEnumerable<GetLessonResponse>>> GetAllAsync();

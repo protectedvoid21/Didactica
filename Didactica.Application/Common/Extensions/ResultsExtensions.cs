@@ -20,17 +20,17 @@ public static class ResultsExtensions
         {
             IsSuccess = result.IsSuccess,
             Message = result.JoinMessages(),
-            Data = result.Value,
+            Data = result.Value
         };
     }
-    
-    public static List<string> JoinMessages(this Result result)
+
+    private static List<string> JoinMessages(this Result result)
     {
-        return result.Errors.Select(e => e.Message).ToList();
+        return result.Errors.ConvertAll(e => e.Message);
     }
 
-    public static List<string> JoinMessages<T>(this Result<T> result)
+    private static List<string> JoinMessages<T>(this Result<T> result)
     {
-        return result.Errors.Select(e => e.Message).ToList();
+        return result.Errors.ConvertAll(e => e.Message);
     }
 }

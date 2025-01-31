@@ -11,7 +11,7 @@ public class AddInspectionTeamHandler(IInspectionTeamService inspectionTeamServi
     {
         var addResult = await inspectionTeamService.AddAsync(new CreateInspectionTeamRequest
         {
-           TeacherIds = request.TeacherIds,
+           TeacherIds = request.TeacherIds
         });
         
         return addResult;
