@@ -15,7 +15,7 @@ export const Auth = () => {
     <>
       <div className='flex flex-col m-auto sm:w-1/2 max-w-[1000px] h-svh justify-center'>
         <div className="mb-8">
-          <Typography variant='h3' className='text-center'>PolWro</Typography>
+          <Typography variant='h3' className='text-center'>Didactica</Typography>
           <Typography variant='h5' className='text-center'>Zaloguj się lub zarejestruj</Typography>
         </div>
         <Paper elevation={3} className='flex flex-col justify-between gap-10 p-4 sm:p-20'>
