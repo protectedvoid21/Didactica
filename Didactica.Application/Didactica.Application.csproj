@@ -7,27 +7,35 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="FluentResults">
-        <HintPath>..\..\..\..\.nuget\packages\fluentresults\3.16.0\lib\netstandard2.1\FluentResults.dll</HintPath>
-      </Reference>
-      <Reference Include="MediatR">
-        <HintPath>..\..\..\..\.nuget\packages\mediatr\12.4.1\lib\net6.0\MediatR.dll</HintPath>
-      </Reference>
-      <Reference Include="MediatR.Contracts">
-        <HintPath>..\..\..\..\.nuget\packages\mediatr.contracts\2.0.1\lib\netstandard2.0\MediatR.Contracts.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.EntityFrameworkCore">
-        <HintPath>..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\9.0.0\lib\net8.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-      </Reference>
+        <Reference Include="FluentResults">
+            <HintPath>..\..\..\..\.nuget\packages\fluentresults\3.16.0\lib\netstandard2.1\FluentResults.dll</HintPath>
+        </Reference>
+        <Reference Include="MediatR">
+            <HintPath>..\..\..\..\.nuget\packages\mediatr\12.4.1\lib\net6.0\MediatR.dll</HintPath>
+        </Reference>
+        <Reference Include="MediatR.Contracts">
+            <HintPath>..\..\..\..\.nuget\packages\mediatr.contracts\2.0.1\lib\netstandard2.0\MediatR.Contracts.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions">
+            <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.12\ref\net8.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.EntityFrameworkCore">
+            <HintPath>..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\9.0.0\lib\net8.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Didactica.Domain\Didactica.Domain.csproj" />
-      <ProjectReference Include="..\Didactica.Infrastructure\Didactica.Infrastructure.csproj" />
+        <ProjectReference Include="..\Didactica.Domain\Didactica.Domain.csproj"/>
+        <ProjectReference Include="..\Didactica.Infrastructure\Didactica.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="Bogus" Version="35.6.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
+
+
     </ItemGroup>
 
 </Project>

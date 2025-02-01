@@ -1,3 +1,27 @@
+export type ApiResponse = {
+  message: string[];
+  isSuccess: boolean;
+}
+
+export type ApiResponseData<T> = ApiResponse & {
+  data: T;
+}
+
+export type LoginRequest = {
+  userName: string;
+  password: string;
+}
+
+export type AuthResult = {
+  token: string;
+  refreshToken: string;
+}
+
+export type RegisterRequest = {
+  userName: string;
+  password: string;
+}
+
 export type InspectionFormRequest = {
   inspectionId: number;
   wereClassesOnTime: boolean;
@@ -14,3 +38,4 @@ export type InspectionFormRequest = {
   conclusionsAndRecommendations: string;
   finalGrade: string;
 }
+

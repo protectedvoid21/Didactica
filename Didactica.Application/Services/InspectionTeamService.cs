@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Didactica.Domain.Dto;
 using Didactica.Domain.Models;
+using Didactica.Domain.Models.Persistent;
 using Didactica.Domain.Services;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;

@@ -1,12 +1,14 @@
+using System.Reflection;
 using Carter;
-using Didactica.Application.Commands.Inspections.Add;
 using Didactica.Application.Services;
 using Didactica.Domain.Services;
 using Didactica.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
-
+using Didactica.Api.Extensions;
+using Didactica.Application.Commands.Inspections.Add;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +18,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddInspectionCommand).Assembly));
 builder.Services.AddCarter();
-builder.Services
-    .AddScoped<IInspectionService, InspectionService>();
+builder.Services.AddAuthentication(builder.Configuration, builder.Environment.IsProduction());
 
-builder.Services.AddScoped<IDbContext, DidacticaDbContext>();
-builder.Services.AddScoped<ITeacherService, TeacherService>();
-builder.Services.AddScoped<ILessonService, LessonService>();
-builder.Services.AddScoped<IInspectionTeamService, InspectionTeamService>();
+builder.Services
+    .AddScoped<IDbContext, DidacticaDbContext>()
+    .AddScoped<IInspectionService, InspectionService>()
+    .AddScoped<ITeacherService, TeacherService>()
+    .AddScoped<ILessonService, LessonService>()
+    .AddScoped<ITokenService, TokenService>()
+    .AddScoped<IAccountService, AccountService>()
+    .AddScoped<IInspectionTeamService, InspectionTeamService>();
+
+builder.Services.Configure<SwaggerGeneratorOptions>(o => o.InferSecuritySchemes = true);
+
+
 builder.Services.AddSerilog(config =>
 {
     config
@@ -34,10 +43,7 @@ builder.Services.AddSerilog(config =>
 });
 
 builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnectionString("Didactica"),
-    options =>
-    {
-        options.MigrationsAssembly(typeof(DidacticaDbContext).Assembly);
-    },
+    options => { options.MigrationsAssembly(typeof(DidacticaDbContext).Assembly); },
     dbBuilder =>
     {
         dbBuilder.UseSnakeCaseNamingConvention();
@@ -48,7 +54,21 @@ builder.Services.AddNpgsql<DidacticaDbContext>(builder.Configuration.GetConnecti
     }
 );
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        config =>
+        {
+            config
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
@@ -62,6 +82,7 @@ app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

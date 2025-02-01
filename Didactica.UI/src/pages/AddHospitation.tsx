@@ -84,7 +84,6 @@ export const AddHospitation = () => {
                           </div>
                         }
                       />
-
                     </div>
                   }
                 />

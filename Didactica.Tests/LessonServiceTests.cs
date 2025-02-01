@@ -1,6 +1,7 @@
 ﻿using Didactica.Application.Services;
 using Didactica.Domain.Dto;
 using Didactica.Domain.Models;
+using Didactica.Domain.Models.Persistent;
 using Didactica.Domain.Services;
 using MockQueryable.NSubstitute;
 using NSubstitute;
