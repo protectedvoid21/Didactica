@@ -1,4 +1,5 @@
 using Didactica.Domain.Models;
+using Didactica.Domain.Models.Persistent;
 using Didactica.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,6 +20,7 @@ public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>,
     public DbSet<Specialization> Specializations { get; set; }
     public DbSet<InspectionTeam> InspectionTeams { get; set; }
     public DbSet<InspectionForm> InspectionForms { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     
     public DidacticaDbContext(DbContextOptions<DidacticaDbContext> options) : base(options)
     {

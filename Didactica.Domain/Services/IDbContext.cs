@@ -1,4 +1,5 @@
 using Didactica.Domain.Models;
+using Didactica.Domain.Models.Persistent;
 using Microsoft.EntityFrameworkCore;
 
 namespace Didactica.Domain.Services;
@@ -22,6 +23,8 @@ public interface IDbContext
     DbSet<Appeal> Appeals { get; set; }
     DbSet<AppealStatus> AppealStatuses { get; set; }
     DbSet<AppUser> Users { get; set; }
+    DbSet<RefreshToken> RefreshTokens { get; set; }
+
   
     int SaveChanges();
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = new());

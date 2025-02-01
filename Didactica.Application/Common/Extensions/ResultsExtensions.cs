@@ -20,7 +20,7 @@ public static class ResultsExtensions
         {
             IsSuccess = result.IsSuccess,
             Message = result.JoinMessages(),
-            Data = result.Value
+            Data = result.IsSuccess ? result.Value : default,
         };
     }
 

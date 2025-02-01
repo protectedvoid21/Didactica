@@ -14,6 +14,7 @@
         <PackageReference Include="FluentResults" Version="3.16.0" />
         <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.12" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
           <PrivateAssets>all</PrivateAssets>
@@ -22,17 +23,12 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
         <PackageReference Include="Serilog" Version="4.2.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Didactica.Application\Didactica.Application.csproj" />
       <ProjectReference Include="..\Didactica.Infrastructure\Didactica.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Helpers\" />
-      <Folder Include="Models\" />
     </ItemGroup>
 
 </Project>
