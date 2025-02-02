@@ -1,18 +1,31 @@
-import { Edit, Mail, Menu, SettingsOutlined } from '@mui/icons-material'
+import { AllInbox, Edit, Mail, Menu, Person, PersonSearch, SettingsOutlined } from '@mui/icons-material'
 import { ReactElement } from 'react'
 import { Link } from 'react-router'
 import { Logo } from './Logo'
 import { Fab } from '@mui/material'
+import { useAuth } from '../utils/AuthProvider'
 
 export const NavBar = () => {
+  const auth = useAuth();
+
   const NavElement = ({ href, icon, text }: { href: string, icon: ReactElement, text: string }) => (
-    <Link to={href} className='flex flex-col items-center text-primary-800 no-underline'>
-      {icon}
+    <Link to={href} className='flex flex-col items-center hover:transition duration-100 text-primary-800 no-underline hover:text-black group '>
+      <div className='duration-200 group-hover:bg-[#E8DEF8] rounded-3xl w-2/3 p-1 mx-auto'>{icon}</div>
       <div className='no-underline'>{text}</div>
     </Link>
   )
 
   const elements = [
+    {
+      href: '/',
+      icon: <PersonSearch />,
+      text: 'Moje hospitacje'
+    },
+    {
+      href: '/hospitacje-komisja',
+      icon: <Person />,
+      text: 'Komisja hospitacyjna'
+    },
     {
       href: '/',
       icon: <Mail />,
@@ -25,22 +38,20 @@ export const NavBar = () => {
     }
   ]
 
+  if (auth.roles?.includes('Dean')) {
+    elements.push({
+      href: '/zaplanowane-hospitacje',
+      icon: <AllInbox />,
+      text: 'Zaplanowane hospitacje'
+    })
+  }
+
   return (
     <nav>
       <div className='mb-8'>
         <Logo />
       </div>
       <ul className='flex flex-col justify-center gap-8 my-12 text-primary-800 font-medium text-center'>
-        <li>
-          <Menu />
-        </li>
-        <li>
-          <Link to={'/dodawanie-hospitacji'}>
-            <Fab color='primary' sx={{ borderRadius: '20%', boxShadow: 'none' }}>
-              <Edit />
-            </Fab>
-          </Link>
-        </li>
         {elements.map((element, index) => (
           <li key={index}>
             <NavElement {...element}></NavElement>
