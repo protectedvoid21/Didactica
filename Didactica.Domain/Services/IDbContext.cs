@@ -18,7 +18,6 @@ public interface IDbContext
     DbSet<Teacher> Teachers { get; set; }
     DbSet<InspectionTeam> InspectionTeams { get; set; }
     DbSet<Semester> Semesters { get; set; }
-    DbSet<Specialization> Specializations { get; set; }
     DbSet<Degree> Degrees { get; set; }
     DbSet<Appeal> Appeals { get; set; }
     DbSet<AppealStatus> AppealStatuses { get; set; }

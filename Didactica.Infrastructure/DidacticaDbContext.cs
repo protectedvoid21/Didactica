@@ -17,7 +17,6 @@ public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>,
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<LessonType> LessonTypes { get; set; }
     public DbSet<Semester> Semesters { get; set; }
-    public DbSet<Specialization> Specializations { get; set; }
     public DbSet<InspectionTeam> InspectionTeams { get; set; }
     public DbSet<InspectionForm> InspectionForms { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }

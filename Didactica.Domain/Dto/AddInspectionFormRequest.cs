@@ -5,8 +5,6 @@ namespace Didactica.Domain.Dto;
 /// </summary>
 public record AddInspectionFormRequest
 {
-    public required int InspectionId { get; init; }
-    
     public required bool WereClassesOnTime { get; set; }
     public required bool WasAttendanceChecked { get; set; }
     public required bool WasRoomSuitable { get; set; }

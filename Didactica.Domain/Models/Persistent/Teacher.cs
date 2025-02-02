@@ -12,8 +12,6 @@ namespace Didactica.Domain.Models.Persistent;
 /// </remarks>
 public class Teacher : BaseEntity
 {
-    private ICollection<InspectionTeam> _inspectionTeams = [];
-
     [MaxLength(255)]
     public required string Name { get; set; }
     
@@ -25,10 +23,9 @@ public class Teacher : BaseEntity
     public string? Email { get; set; }
     [MaxLength(20)]
     public string? PhoneNumber { get; set; }
+    
+    public Degree? Degree { get; set; }
+    public int? DegreeId { get; set; }
 
-    public ICollection<InspectionTeam> InspectionTeams
-    {
-        get => _inspectionTeams;
-        set => _inspectionTeams = value;
-    }
+    public ICollection<InspectionTeam> InspectionTeams { get; set; } = [];
 }

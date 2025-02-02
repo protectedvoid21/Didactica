@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Inżynier",
+    "short": "inż."
+  },
+  {
+    "name": "Magister",
+    "short": "mgr"
+  },
+  {
+    "name": "Magister inżynier",
+    "short": "mgr inż."
+  },
+  {
+    "name": "Doktor",
+    "short": "dr"
+  },
+  {
+    "name": "Doktor habilitowany",
+    "short": "dr hab."
+  },
+  {
+    "name": "Doktor inżynier",
+    "short": "dr inż."
+  },
+  {
+    "name": "Doktor habilitowany inżynier",
+    "short": "dr hab. inż."
+  },
+  {
+    "name": "Profesor nadzwyczajny",
+    "short": "prof. nadzw."
+  },
+  {
+    "name": "Profesor",
+    "short": "prof."
+  },
+  {
+    "name": "Profesor tytularny",
+    "short": "prof. dr hab."
+  }
+]

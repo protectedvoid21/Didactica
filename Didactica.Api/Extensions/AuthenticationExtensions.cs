@@ -72,7 +72,10 @@ public static class AuthenticationExtensions
                 };
             });
 
-        services.AddAuthorizationBuilder().AddCurrentUserHandler();
+        services.AddAuthorizationBuilder().AddFallbackPolicy("Authorize", options =>
+        {
+            options.RequireAuthenticatedUser().Build();
+        }).AddCurrentUserHandler();
         services.AddCurrentUser();
         return services;
     }

@@ -1,0 +1,166 @@
+Analiza Matematyczna I
+Analiza Matematyczna II
+Analiza Matematyczna III
+Algebra
+Algebra liniowa
+Matematyka dyskretna
+Geometria analityczna
+Równania różniczkowe
+Podstawy rachunku różniczkowego
+Statystyka matematyczna
+Probabilistyka
+Metody numeryczne
+Analiza zespolona
+Optymalizacja matematyczna
+Teoria grafów
+Logika matematyczna
+Matematyka finansowa
+Rachunek tensorowy
+Rachunek wariacyjny
+Kombinatoryka
+Programowanie strukturalne i obiektowe
+Programowanie funkcyjne
+Programowanie współbieżne i równoległe
+Programowanie systemowe
+Programowanie niskopoziomowe
+Algorytmy i struktury danych
+Analiza algorytmów
+Sztuczna inteligencja
+Uczenie maszynowe
+Przetwarzanie języka naturalnego
+Programowanie aplikacji mobilnych
+Programowanie aplikacji webowych
+Programowanie gier komputerowych
+Programowanie mikrokontrolerów
+Inżynieria oprogramowania
+Systemy operacyjne
+Systemy wbudowane
+Sieci komputerowe
+Bazy danych
+Big Data
+Podstawy elektroniki
+Układy cyfrowe
+Układy analogowe
+Mikroprocesory i mikrokontrolery
+Elektronika analogowa i cyfrowa
+Sensory i przetwarzanie sygnałów
+Systemy mikroprocesorowe
+Technika mikrofalowa
+Telekomunikacja
+Sieci telekomunikacyjne
+Systemy radiokomunikacyjne
+Układy optoelektroniczne
+Internet Rzeczy (IoT)
+Diagnostyka układów elektronicznych
+Projektowanie PCB
+Robotyka i mechatronika
+Automatyka i sterowanie
+Przetwarzanie sygnałów cyfrowych
+Sztuczna inteligencja w elektronice
+Energoelektronika
+Mechanika ogólna
+Mechanika płynów
+Wytrzymałość materiałów
+Dynamika maszyn
+Podstawy konstrukcji maszyn
+Technologia materiałowa
+Obróbka skrawaniem
+Robotyka przemysłowa
+Modelowanie CAD/CAM
+Hydraulika i pneumatyka
+Druk 3D i technologie przyrostowe
+Tribologia
+Wibroakustyka
+Mechatronika
+Inżynieria materiałowa
+Projektowanie systemów mechatronicznych
+Technologia spawalnictwa
+Automatyzacja procesów produkcyjnych
+Modelowanie i symulacja układów mechanicznych
+Systemy sterowania w mechanice
+Podstawy energetyki
+Odnawialne źródła energii
+Energetyka jądrowa
+Elektrownie i elektrociepłownie
+Gospodarka energetyczna
+Inżynieria środowiska
+Termodynamika techniczna
+Recykling i gospodarka odpadami
+Technologie niskoemisyjne
+Modelowanie systemów energetycznych
+Systemy magazynowania energii
+Transport i dystrybucja energii
+Ekologiczne źródła energii
+Systemy HVAC
+Pomiary i diagnostyka w energetyce
+Efektywność energetyczna
+Polityka energetyczna
+Elektromobilność
+Hydrologia i gospodarka wodna
+Chemia środowiskowa
+Podstawy automatyki
+Sterowniki PLC
+Systemy SCADA
+Sztuczna inteligencja w robotyce
+Projektowanie systemów sterowania
+Systemy dynamiczne
+Czujniki i systemy pomiarowe
+Modelowanie procesów przemysłowych
+Komputerowe sterowanie procesami
+Roboty autonomiczne
+Przetwarzanie obrazów w robotyce
+Inteligentne systemy transportowe
+Roboty mobilne
+Systemy wizyjne w automatyce
+Sieci neuronowe w automatyce
+Internet Rzeczy w przemyśle
+Bezpieczeństwo systemów sterowania
+Modelowanie i symulacja procesów
+Diagnostyka systemów automatyki
+Zaawansowane układy sterowania
+Mechanika budowli
+Materiały budowlane
+Konstrukcje żelbetowe
+Budownictwo ekologiczne
+Podstawy architektury
+Instalacje sanitarne
+Projektowanie konstrukcji stalowych
+Geotechnika
+Infrastruktura transportowa
+Hydrotechnika
+Mosty i tunele
+Zarządzanie projektami budowlanymi
+Oświetlenie budynków
+BIM (Building Information Modeling)
+Akustyka budowlana
+Wentylacja i klimatyzacja
+Ergonomia w budownictwie
+Technologie prefabrykacji
+Inżynieria lądowa
+Systemy przeciwpożarowe
+Biotechnologia
+Chemia techniczna
+Fizyka techniczna
+Nanotechnologia
+Astrofizyka stosowana
+Bioinformatyka
+Etyka inżynierska
+Przemysł 4.0
+Przetwarzanie dźwięku
+Druk cyfrowy
+Podstawy kryptografii
+Bezpieczeństwo informacji
+Prawo w IT
+Oprogramowanie inżynierskie
+E-commerce technologiczny
+Automatyzacja testowania
+Modelowanie matematyczne
+Komunikacja techniczna
+Projektowanie UX/UI
+Technologie VR/AR
+Sieci 5G
+Cyberbezpieczeństwo
+Techniki optyczne
+Inżynieria systemów lotniczych
+Transport autonomiczny
+Informatyka kwantowa

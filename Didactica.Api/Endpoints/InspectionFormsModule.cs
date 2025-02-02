@@ -2,6 +2,7 @@ using Carter;
 using Didactica.Api.Extensions;
 using Didactica.Application.Commands.InspectionForms.Add;
 using Didactica.Application.Common.Extensions;
+using Didactica.Domain.Dto;
 using MediatR;
 
 namespace Didactica.Api.Endpoints;
@@ -19,12 +20,12 @@ public class InspectionFormsModule : ICarterModule
 	/// </param>
 	public void AddRoutes(IEndpointRouteBuilder app)
 	{
-		var endpoints = app.MapGroup("inspection-forms");
+		var endpoints = app.MapGroup("inspection-forms").WithTags("Inspection Forms");
 		endpoints.AddOpenApiSecurityRequirement();
 
-		endpoints.MapPost("", async (IMediator mediator, AddInspectionFormCommand command) =>
+		endpoints.MapPost("/{id}", async (IMediator mediator, int inspectionId, AddInspectionFormRequest request) =>
 		{
-			var result = await mediator.Send(command);
+			var result = await mediator.Send(new AddInspectionFormCommand(inspectionId, request));
 			if (result.IsFailed)
 			{
 				return Results.BadRequest(result.ToApiResponse());

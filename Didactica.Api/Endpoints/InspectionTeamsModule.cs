@@ -19,20 +19,19 @@ public class InspectionTeamsModule : ICarterModule
     /// <param name="app">The <see cref="IEndpointRouteBuilder"/> used to define application endpoint routes.</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var endpoints = app.MapGroup("inspectionTeams");
+        var endpoints = app.MapGroup("inspection-teams").WithTags("Inspection Teams");
         endpoints.AddOpenApiSecurityRequirement();
+        
+        endpoints.MapPost("", async (IMediator mediator, AddInspectionTeamCommand command) =>
         {
-            endpoints.MapPost("", async (IMediator mediator, AddInspectionTeamCommand command) =>
+            var result = await mediator.Send(command);
+            if (result.IsFailed)
             {
-                var result = await mediator.Send(command);
-                if (result.IsFailed)
-                {
-                    return Results.BadRequest(result.ToApiResponse());
-                }
+                return Results.BadRequest(result.ToApiResponse());
+            }
 
-                return Results.Created("/inspectionTeams/{1}"/*Placeholder*/, result.ToApiResponse());
-            });
-        }
+            return Results.Created("/inspectionTeams/{1}"/*Placeholder*/, result.ToApiResponse());
+        });
     }
 }
     
