@@ -12,7 +12,7 @@ public static class AuthenticationExtensions
     public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration,
         bool isProduction)
     {
-        services.AddIdentity<AppUser, IdentityRole<Guid>>(options => options.SignIn.RequireConfirmedAccount = true)
+        services.AddIdentity<AppUser, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<DidacticaDbContext>()
             .AddDefaultTokenProviders();
 

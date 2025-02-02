@@ -25,6 +25,17 @@ public class DidacticaDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>,
     {
     }
     
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Inspection>()
+            .HasOne(i => i.InspectionForm)
+            .WithOne(f => f.Inspection)
+            .HasForeignKey<InspectionForm>(f => f.InspectionId);
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+    
     private void UpdateBaseTrackingEntities()
     {
         var entries = ChangeTracker.Entries<BaseTrackingEntity>().ToList();

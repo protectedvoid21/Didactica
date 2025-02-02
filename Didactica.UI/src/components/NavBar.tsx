@@ -1,4 +1,4 @@
-import { AllInbox, Edit, Mail, Menu, Person, PersonSearch, SettingsOutlined } from '@mui/icons-material'
+import { AllInbox, Edit, Mail, ManageAccounts, Menu, Person, PersonSearch, SettingsOutlined } from '@mui/icons-material'
 import { ReactElement } from 'react'
 import { Link } from 'react-router'
 import { Logo } from './Logo'
@@ -16,16 +16,24 @@ export const NavBar = () => {
   )
 
   const elements = [
-    {
-      href: '/',
-      icon: <PersonSearch />,
-      text: 'Moje hospitacje'
-    },
-    {
-      href: '/hospitacje-komisja',
-      icon: <Person />,
-      text: 'Komisja hospitacyjna'
-    },
+    ...(!auth.roles?.includes('WKJK') ? [
+      {
+        href: '/',
+        icon: <PersonSearch />,
+        text: 'Moje hospitacje'
+      },
+      {
+        href: '/hospitacje-komisja',
+        icon: <Person />,
+        text: 'Komisja hospitacyjna'
+      },
+    ] : []),
+    ...(auth.roles?.includes('WKJK') ? [{
+      href: '/zespoly-hospitacyjne',
+      icon: <ManageAccounts />,
+      text: 'Zespoły hospitacyjne'
+    }
+    ] : []),
     {
       href: '/',
       icon: <Mail />,
@@ -35,16 +43,13 @@ export const NavBar = () => {
       href: '/users',
       icon: <SettingsOutlined />,
       text: 'Ustawienia'
-    }
-  ]
-
-  if (auth.roles?.includes('Dean')) {
-    elements.push({
+    },
+    ...(auth.roles?.includes('Dean') ? [{
       href: '/zaplanowane-hospitacje',
       icon: <AllInbox />,
       text: 'Zaplanowane hospitacje'
-    })
-  }
+    }] : [])
+  ]
 
   return (
     <nav>

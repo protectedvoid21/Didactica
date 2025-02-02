@@ -56,4 +56,21 @@ public class InspectionTeamService : IInspectionTeamService
         await _dbContext.SaveChangesAsync();
         return Result.Ok().WithSuccess("Inspection team added successfully");
     }
+
+    public async Task<Result<IEnumerable<GetInspectionTeamResponse>>> GetAllAsync()
+    {
+        return await _dbContext.InspectionTeams
+            .Select(it => new GetInspectionTeamResponse
+            {
+                Id = it.Id,
+                CreateDate = it.CreatedOn,
+                Teachers = it.Teachers.Select(t => new InspectionTeamTeacherResponse
+                {
+                    Id = t.Id,
+                    FirstName = t.Name,
+                    LastName = t.LastName,
+                }).ToArray()
+            })
+            .ToListAsync();
+    }
 }

@@ -19,5 +19,7 @@ public class GetInspectionResponse
     public required bool IsRemote { get; set; }
     public required string? LessonEnvironment { get; set; }
     public required string? Place { get; set; }
-    public required GetInspectionTeamResponse? GetInspectionTeamResponse { get; set; }
+    public required bool IsRated { get; set; }
+    public required int? InspectionFormId { get; set; }
+    public required GetInspectionTeamBasicResponse? GetInspectionTeamResponse { get; set; }
 }

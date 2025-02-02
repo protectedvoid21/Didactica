@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '../utils/api';
 import { ApiResponseData, InspectionDetails } from '../types';
 import urlJoin from 'url-join';
-import { INSPECTION_TEAMS_URL, INSPECTIONS_URL } from '../utils/constants';
+import { INSPECTIONS_URL } from '../utils/constants';
 
 export const useGetPlannedInspections = () => useQuery({
   queryKey: ['inspections-for-team'],

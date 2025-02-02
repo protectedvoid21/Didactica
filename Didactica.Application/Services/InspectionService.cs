@@ -37,24 +37,8 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<GetInspectionResponse>> GetAsync(int id)
     {
-        var inspection = await _dbContext.Inspections.Select(h => new GetInspectionResponse
-        {
-            Id = h.Id,
-            TeacherId = h.Teacher.Id,
-            TeacherFirstName = h.Teacher.Name,
-            TeacherLastName = h.Teacher.LastName,
-            Course = h.Lesson.Name,
-            CourseType = h.Lesson.LessonType.Name,
-            Date = h.Lesson.Date,
-            IsRemote = h.IsRemote,
-            LessonEnvironment = h.LessonEnvironment,
-            Place = h.Lesson.Room,
-            GetInspectionTeamResponse = new GetInspectionTeamResponse
-            {
-                Id = h.InspectionTeam!.Id,
-                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray(),
-            }
-        }).FirstOrDefaultAsync(h => h.Id == id);
+        var inspection = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
+            .FirstOrDefaultAsync(h => h.Id == id);
         
         if (inspection == null)
         {
@@ -79,20 +63,8 @@ public class InspectionService : IInspectionService
         
         var inspections = await _dbContext.Inspections
             .Where(h => h.Teacher.Id == teacherId)
-            .Select(h => new GetInspectionResponse
-            {
-                Id = h.Id,
-                TeacherFirstName = h.Teacher.Name,
-                TeacherLastName = h.Teacher.LastName,
-                Course = h.Lesson.Name,
-                CourseType = h.Lesson.LessonType.Name,
-                Date = h.Lesson.Date,
-                IsRemote = h.IsRemote,
-                LessonEnvironment = h.LessonEnvironment,
-                Place = h.Lesson.Room,
-                TeacherId = 0,
-                GetInspectionTeamResponse = null,
-            }).ToListAsync(ct);
+            .Select(i => MapInspectionToResponse(i))
+            .ToListAsync(ct);
         
         return Result.Ok(inspections);
     }
@@ -153,26 +125,10 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<IEnumerable<GetInspectionResponse>>> GetInspectionsOfTeacherById(int teacherId)
     {
-        var inspections = await _dbContext.Inspections.Select(h => new GetInspectionResponse
-        {
-            Id = h.Id,
-            TeacherId = h.Teacher.Id,
-            TeacherFirstName = h.Teacher.Name,
-            TeacherLastName = h.Teacher.LastName,
-            Course = h.Lesson.Name,
-            CourseType = h.Lesson.LessonType.Name,
-            Date = h.Lesson.Date,
-            IsRemote = h.IsRemote,
-            LessonEnvironment = h.LessonEnvironment,
-            Place = h.Lesson.Room,
-            GetInspectionTeamResponse = new GetInspectionTeamResponse
-            {
-                Id = h.InspectionTeam.Id,
-                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(
-                        t.Id, 
-                        string.Join(" ", t.Degree != null ? t.Degree.Short : "", t.Name, t.LastName)))
-                    .ToArray()}
-        }).Where(h => h.TeacherId == teacherId).ToListAsync();
+        var inspections = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
+            .Where(h => h.TeacherId == teacherId)
+            .ToListAsync();
+        
         return inspections;
     }
 
@@ -186,26 +142,8 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPlannedInspections()
     {
-        var inspections = await _dbContext.Inspections.Select(h => new GetInspectionResponse
-        {
-            Id = h.Id,
-            TeacherId = h.Teacher.Id,
-            TeacherFirstName = h.Teacher.Name,
-            TeacherLastName = h.Teacher.LastName,
-            Course = h.Lesson.Name,
-            CourseType = h.Lesson.LessonType.Name,
-            Date = h.Lesson.Date,
-            IsRemote = h.IsRemote,
-            LessonEnvironment = h.LessonEnvironment,
-            Place = h.Lesson.Room,
-            GetInspectionTeamResponse = new GetInspectionTeamResponse
-            {
-                Id = h.InspectionTeam!.Id,
-                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(
-                        t.Id, 
-                        string.Join(" ", t.Degree != null ? t.Degree.Short : "", t.Name, t.LastName)))
-                    .ToArray(),
-            }}).Where(h => h.Date > DateTime.UtcNow).ToListAsync();
+        var inspections = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
+            .Where(h => h.Date > DateTime.UtcNow).ToListAsync();
         
         return inspections;
     }
@@ -220,27 +158,8 @@ public class InspectionService : IInspectionService
         
         var inspections = await _dbContext.Inspections
             .Where(i => i.InspectionTeam != null && i.InspectionTeam.Teachers.Any(t => t.Id == teacherId) == true)
-            .Select(h => new GetInspectionResponse
-        {
-            Id = h.Id,
-            TeacherId = h.Teacher.Id,
-            TeacherFirstName = h.Teacher.Name,
-            TeacherLastName = h.Teacher.LastName,
-            Course = h.Lesson.Name,
-            CourseType = h.Lesson.LessonType.Name,
-            Date = h.Lesson.Date,
-            IsRemote = h.IsRemote,
-            LessonEnvironment = h.LessonEnvironment,
-            Place = h.Lesson.Room,
-            GetInspectionTeamResponse = new GetInspectionTeamResponse
-            {
-                Id = h.InspectionTeam!.Id,
-                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(
-                    t.Id, 
-                    string.Join(" ", t.Degree != null ? t.Degree.Short : "", t.Name, t.LastName)))
-                    .ToArray(),
-            }
-        }).ToListAsync();
+            .Select(i => MapInspectionToResponse(i))
+            .ToListAsync();
         
         return inspections;
     }
@@ -278,5 +197,37 @@ public class InspectionService : IInspectionService
         });
         await _dbContext.SaveChangesAsync();
         return Result.Ok().WithSuccess("Inspection form added successfully");
+    }
+    
+    private static GetInspectionResponse MapInspectionToResponse(Inspection inspection)
+    {
+        return new GetInspectionResponse
+        {
+            Id = inspection.Id,
+            TeacherId = inspection.Teacher.Id,
+            TeacherFirstName = inspection.Teacher.Name,
+            TeacherLastName = inspection.Teacher.LastName,
+            Course = inspection.Lesson.Name,
+            CourseType = inspection.Lesson.LessonType.Name,
+            Date = inspection.Lesson.Date,
+            IsRemote = inspection.IsRemote,
+            LessonEnvironment = inspection.LessonEnvironment,
+            Place = inspection.Lesson.Room,
+            GetInspectionTeamResponse = new GetInspectionTeamBasicResponse
+            {
+                Id = inspection.InspectionTeam!.Id,
+                Teachers = inspection.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(
+                        t.Id,
+                        string.Join(" ",
+                            t.Degree != null
+                                ? t.Degree.Short
+                                : "",
+                            t.Name,
+                            t.LastName)))
+                    .ToArray(),
+            },
+            IsRated = inspection.InspectionForm != null,
+            InspectionFormId = inspection.InspectionForm?.Id ?? 0,
+        };
     }
 }

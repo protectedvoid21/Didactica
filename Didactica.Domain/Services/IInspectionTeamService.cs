@@ -9,4 +9,6 @@ namespace Didactica.Domain.Services;
 public interface IInspectionTeamService
 {
     Task<Result> AddAsync(CreateInspectionTeamRequest request);
+    
+    Task<Result<IEnumerable<GetInspectionTeamResponse>>> GetAllAsync();
 }

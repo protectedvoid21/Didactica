@@ -4,6 +4,7 @@ using Didactica.Application.Commands.InspectionTeam;
 using Didactica.Application.Common.Extensions;
 using Didactica.Application.Common.Models;
 using Didactica.Domain.Dto;
+using Didactica.Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,20 @@ public class InspectionTeamsModule : ICarterModule
 
             return Results.Created("/inspectionTeams/{1}"/*Placeholder*/, result.ToApiResponse());
         });
+
+        endpoints.MapGet("/", async (
+            IMediator mediator,
+            [FromServices] CurrentUser user,
+            [FromServices] IPrivilegeService privilegeService) =>
+        {
+            if (!await privilegeService.IsUserInRoleAsync(user.Id, "WKJK"))
+            {
+                return Results.Forbid();
+            }
+            
+            var result = await mediator.Send(new GetInspectionsTeamsQuery());
+            return Results.Ok(result.ToApiResponse());
+        }).Produces<ApiResponse<IEnumerable<GetInspectionTeamResponse>>>();
 
         endpoints.MapGet("/inspections", async (
             IMediator mediator,

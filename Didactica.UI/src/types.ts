@@ -22,6 +22,15 @@ export type RegisterRequest = {
   password: string;
 }
 
+export type GetTeacherResponse = {
+  id: number;
+  name: string;
+  lastName: string;
+  faculty?: string;
+  email?: string;
+  phoneNumber?: string;
+}
+
 export type InspectionFormRequest = {
   inspectionId: number;
   wereClassesOnTime: boolean;
@@ -59,3 +68,14 @@ export type InspectionDetails = {
   };
 }
 
+export type InspectionTeamTeacherResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+export type GetInspectionTeamResponse = {
+  id: number;
+  createDate: Date;
+  teachers: InspectionTeamTeacherResponse[];
+}
