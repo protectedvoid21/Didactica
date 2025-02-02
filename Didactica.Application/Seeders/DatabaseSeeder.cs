@@ -229,14 +229,14 @@ public class DatabaseSeeder
         var wkjk = new AppUser
         {
             UserName = "WKJK",
-            Email = "wkjk@pwr.pl",
+            Email = "wkjk@dean.com",
             Teacher = null,
         };
         
         await _userManager.CreateAsync(dean, "Dean1234!");
-        await _userManager.CreateAsync(wkjk, "WKJK1234!");
-        
         await _userManager.AddToRoleAsync(dean, "Dean");
+        
+        await _userManager.CreateAsync(wkjk, "Wkjk1234!");
         await _userManager.AddToRoleAsync(wkjk, "WKJK");
     }
 

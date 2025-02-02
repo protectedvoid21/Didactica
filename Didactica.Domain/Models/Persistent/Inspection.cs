@@ -19,4 +19,7 @@ public class Inspection : BaseTrackingEntity
     public string? LessonEnvironment { get; set; }
     public InspectionTeam? InspectionTeam { get; set; }
     public int InspectionTeamId { get; set; }
+    
+    public InspectionForm? InspectionForm { get; set; }
+    public int? InspectionFormId { get; set; }
 }
