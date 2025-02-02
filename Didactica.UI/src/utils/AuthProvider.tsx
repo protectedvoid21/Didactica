@@ -5,6 +5,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 interface AuthContextType {
   token: string | null;
   userName: string | undefined;
+  roles: | string | undefined;
   isAdmin: boolean | undefined;
   setToken: (newToken: string | null) => void;
 }
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactElement }) => {
   const decodedToken: JwtPayload | undefined = token != null ? jwtDecode(token) : undefined;
   const userName = decodedToken?.sub;
   const isAdmin = userName === "Admin";
+  const roles = decodedToken?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
   api.defaults.headers.common["Authorization"] = "Bearer " + token;
 
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactElement }) => {
     () => ({
       token,
       userName: decodedToken?.sub,
+      roles,
       isAdmin,
       setToken,
     }),

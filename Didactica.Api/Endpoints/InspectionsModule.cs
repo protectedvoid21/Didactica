@@ -49,9 +49,28 @@ public class InspectionsModule : ICarterModule
 
             return Results.NoContent();
         });
-
-        endpoints.MapGet("/teachers/{teacherId}", async (IMediator mediator, [AsParameters] GetInspectionsOfTeacherQuery query) =>
+        
+        endpoints.MapGet("/", async (
+            IMediator mediator,
+            [FromServices] IPrivilegeService privilegeService,
+            [FromServices] CurrentUser user
+            ) =>
         {
+            var getInspectionsQuery = new GetInspectionsOfTeacherQuery(user.User.TeacherId ?? 0);
+            var result = await mediator.Send(getInspectionsQuery);
+            return Results.Ok(result.ToApiResponse());
+        });
+
+        endpoints.MapGet("/teachers/{teacherId}", async (
+            IMediator mediator,
+            [FromServices] IPrivilegeService privilegeService,
+            [FromServices] CurrentUser user,
+            [AsParameters] GetInspectionsOfTeacherQuery query) =>
+        {
+            if (!await privilegeService.IsUserInRoleAsync(user.Id, "Dean"))
+            {
+                return Results.Forbid();
+            }
             var result = await mediator.Send(query);
             return Results.Ok(result.ToApiResponse());
         });
@@ -62,7 +81,7 @@ public class InspectionsModule : ICarterModule
             [FromServices] IPrivilegeService privilegeService,
             [AsParameters] GetPlannedInspectionsQuery query) =>
         {
-            if (await privilegeService.IsUserInRoleAsync(user.Id, "Dean"))
+            if (!await privilegeService.IsUserInRoleAsync(user.Id, "Dean"))
             {
                 return Results.Forbid();
             }

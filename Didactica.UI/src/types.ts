@@ -39,3 +39,23 @@ export type InspectionFormRequest = {
   finalGrade: string;
 }
 
+export type InspectionDetails = {
+  id: number;
+  teacherId: number;
+  teacherFirstName: string;
+  teacherLastName: string;
+  course: string;
+  courseType: string;
+  date: Date;
+  isRemote: boolean;
+  lessonEnvironment: string;
+  place: string;
+  getInspectionTeamResponse: {
+    id: number;
+    teachers: {
+      item1: number;
+      item2: string;
+    }[];
+  };
+}
+
