@@ -21,7 +21,7 @@ export const TopBar = () => {
         <div className='text-4xl'>{new Date().toDateString()}</div>
         <div className='flex gap-4 items-baseline'>
           <div className=''>
-            {roleTranslations[auth.roles] ?? 'Nieznana rola'}
+            {roleTranslations[auth.roles] ?? 'Nauczyciel'}
           </div>
           <div>
             {auth.userName}

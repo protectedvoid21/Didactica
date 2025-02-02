@@ -12,6 +12,7 @@ export const InspectionDetailsPanel = ({ inspectionDetails }: { inspectionDetail
   return (
     <>
       <div className='grid grid-cols-3 gap-4'>
+        <DataDisplay header="Nauczyciel" value={inspectionDetails.teacherFirstName + ' ' + inspectionDetails.teacherLastName} />
         <DataDisplay header="Kurs" value={inspectionDetails.course} />
         <DataDisplay header="Rodzaj zajęć" value={inspectionDetails.courseType} />
         <DataDisplay header="Data zajęć" value={new Date(inspectionDetails.date).toLocaleString()} />

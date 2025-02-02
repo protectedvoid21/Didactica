@@ -6,6 +6,8 @@ import { NonAuthRoute } from './utils/NonAuthRoute';
 import Auth from './utils/Auth';
 import { ProtectedRoute } from './utils/ProtectedRoute';
 import { NotFound } from './pages/NotFound';
+import { PlannedInspections } from './pages/PlannedInspections';
+import { InspectionsForTeam } from './pages/InspectionsForTeam';
 
 const nonAuthRoutes = (
   <>
@@ -22,6 +24,8 @@ const authRoutes = (
         <Route path='/' element={<Home />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/dodawanie-hospitacji' element={<AddInspection />} />
+        <Route path='/zaplanowane-hospitacje' element={<PlannedInspections />} />
+        <Route path='/hospitacje-komisja' element={<InspectionsForTeam />} />
       </Route>
     </Route>
   </>

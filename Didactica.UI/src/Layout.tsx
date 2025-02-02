@@ -8,7 +8,7 @@ export const Layout = () => {
       <div>
         <NavBar />
       </div>
-      <div className='w-3/5 mx-auto'>
+      <div className='w-3/4 mx-auto'>
         <TopBar />
         <div className='mt-16'>
           <Outlet />

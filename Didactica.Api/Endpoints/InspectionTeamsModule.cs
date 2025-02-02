@@ -2,7 +2,10 @@
 using Didactica.Api.Extensions;
 using Didactica.Application.Commands.InspectionTeam;
 using Didactica.Application.Common.Extensions;
+using Didactica.Application.Common.Models;
+using Didactica.Domain.Dto;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Didactica.Api.Endpoints;
 
@@ -32,6 +35,25 @@ public class InspectionTeamsModule : ICarterModule
 
             return Results.Created("/inspectionTeams/{1}"/*Placeholder*/, result.ToApiResponse());
         });
+
+        endpoints.MapGet("/inspections", async (
+            IMediator mediator,
+            [FromServices] CurrentUser user
+            ) =>
+        {
+            if (user.User.TeacherId == null)
+            {
+                return Results.BadRequest(new ApiResponse
+                {
+                    Message = ["User is not a teacher."],
+                    IsSuccess = false
+                });
+            }
+            
+            var result = await mediator.Send(new GetInspectionsForTeamTeacherQuery(user.User.TeacherId.Value));
+            return Results.Ok(result.ToApiResponse());
+        }).Produces<ApiResponse<IEnumerable<GetInspectionResponse>>>()
+        .Produces<ApiResponse<IEnumerable<GetInspectionResponse>>>(StatusCodes.Status400BadRequest);
     }
 }
     

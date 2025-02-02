@@ -9,10 +9,15 @@ import { InspectionDetails } from '../types';
 import { Checkbox } from '@mui/material';
 import { InspectionDetailsPanel } from './InspectionDetailsPanel';
 
-export const InspectionsDataGrid = () => {
-  const { data: inspections } = useGetInspections();
+export const InspectionsDataGrid = ({ inspections, includeTeacherName }: { inspections: InspectionDetails[], includeTeacherName?: boolean }) => {
+  const teacherName: MRT_ColumnDef<InspectionDetails> = {
+    accessorFn: (row) => `${row.teacherFirstName} ${row.teacherLastName}`,
+    header: 'Nauczyciel',
+    size: 150,
+  };
 
   const columns = useMemo<MRT_ColumnDef<InspectionDetails>[]>(() => [
+    ...(includeTeacherName ? [teacherName] : []),
     {
       accessorKey: 'course',
       header: 'Kurs',
@@ -51,8 +56,11 @@ export const InspectionsDataGrid = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: inspections?.data ?? [],
+    data: inspections ?? [],
     enableExpanding: true,
+    initialState: {
+      sorting: [{ id: 'date', desc: true }],
+    },
     renderDetailPanel: (rowData) => (
       <div>
         <InspectionDetailsPanel inspectionDetails={rowData.row.original} />

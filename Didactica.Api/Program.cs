@@ -47,7 +47,7 @@ builder.Services.AddSerilog(config =>
 {
     config
         .MinimumLevel.Debug()
-        .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+        //.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
         .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
         .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
         .Enrich.FromLogContext();

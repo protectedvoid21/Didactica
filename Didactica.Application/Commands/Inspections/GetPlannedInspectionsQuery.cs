@@ -12,6 +12,6 @@ public class GetPlannedInspectionsHandler(IInspectionService inspectionService)
 {
     public async Task<Result<IEnumerable<GetInspectionResponse>>> Handle(GetPlannedInspectionsQuery request, CancellationToken cancellationToken)
     {
-        return await inspectionService.GetAllPlanedInspections();
+        return await inspectionService.GetAllPlannedInspections();
     }
 }

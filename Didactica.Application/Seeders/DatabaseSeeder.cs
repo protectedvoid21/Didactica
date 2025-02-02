@@ -13,6 +13,11 @@ public class DatabaseSeeder
     private readonly RoleManager<IdentityRole<Guid>> _roleManager;
     private readonly string _resourcesPath = Path.Combine("../", "Didactica.Application", "Seeders", "Resources");
     
+    private readonly string[] _randomOnlineCommunicators =
+    [
+        "Teams", "Zoom", "Google Meet", "Skype", "Discord",
+    ];
+    
     public DatabaseSeeder(DidacticaDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
     {
         _dbContext = dbContext;
@@ -29,7 +34,8 @@ public class DatabaseSeeder
         var inspectionTeams = await SeedInspectionTeamsAsync(teachersWithUsers.teachers);
         var roles = await SeedRolesAsync();
         await SeedDeanAndWKJKAsync(roles, degrees, teachersWithUsers.users);
-        await SeedInspectionsAsync(inspectionTeams, lessons, teachersWithUsers.teachers);
+        var inspections = await SeedInspectionsAsync(inspectionTeams, lessons, teachersWithUsers.teachers);
+        await SeedTeamAssignmentToInspectionsAsync(inspectionTeams, inspections);
         
         await _dbContext.SaveChangesAsync();
     }
@@ -140,7 +146,7 @@ public class DatabaseSeeder
         var inspectionTeamFaker = new Faker<InspectionTeam>("pl")
             .RuleFor(it => it.Teachers, f => f.PickRandom(teachers, f.Random.Number(3, 4)).ToList());
         
-        var inspectionTeams = inspectionTeamFaker.Generate(10);
+        var inspectionTeams = inspectionTeamFaker.Generate(70);
         
         _dbContext.InspectionTeams.AddRange(inspectionTeams);
         return inspectionTeams;
@@ -156,24 +162,17 @@ public class DatabaseSeeder
         var inspections = new List<Inspection>();
         
         var inspectionFaker = new Faker<Inspection>("pl")
-            .RuleFor(i => i.CreatedOn, f => f.Date.Between(DateTime.Now.AddMonths(-2), DateTime.Now.AddMonths(2)))
+            .RuleFor(i => i.CreatedOn, f => f.Date.Between(DateTime.Now.AddYears(-2), DateTime.Now.AddMonths(6)))
             .RuleFor(i => i.IsRemote, f => f.Random.Bool(0.15f))
             .RuleFor(i => i.InspectionTeam, f => f.PickRandom(inspectionTeams))
             .RuleFor(i => i.Teacher, f => f.PickRandom(teachers))
             .RuleFor(i => i.Lesson, f => f.PickRandom(lessons));
         
-        inspections.AddRange(inspectionFaker.Generate(100));
+        inspections.AddRange(inspectionFaker.Generate(2000));
         
         inspections.ForEach(i =>
         {
-            if (i.IsRemote)
-            {
-                i.LessonEnvironment = "Zdalnie";
-            }
-            else
-            {
-                i.LessonEnvironment = "Stacjonarnie";
-            }
+            i.LessonEnvironment = i.IsRemote ? Random.Shared.GetItems(_randomOnlineCommunicators, 1).First() : "Stacjonarnie";
         });
         
         _dbContext.Inspections.AddRange(inspections);
@@ -239,5 +238,18 @@ public class DatabaseSeeder
         
         await _userManager.AddToRoleAsync(dean, "Dean");
         await _userManager.AddToRoleAsync(wkjk, "WKJK");
+    }
+
+    private async Task SeedTeamAssignmentToInspectionsAsync(List<InspectionTeam> teams, List<Inspection> inspections)
+    {
+        if (_dbContext.Inspections.Any(i => i.InspectionTeam != null))
+        {
+            return;
+        }
+        
+        for (int i = 0; i < inspections.Count * 0.6; i++)
+        {
+            inspections[i].InspectionTeam = Random.Shared.GetItems(teams.ToArray(), 1).First();
+        }
     }
 }
