@@ -13,7 +13,9 @@ public class AccountsModule : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var endpoints = app.MapGroup("accounts");
+        var endpoints = app.MapGroup("accounts")
+            .AllowAnonymous()
+            .WithTags("Accounts");
 
         endpoints.MapPost("/login", async (IMediator mediator, [FromBody] LoginCommand command) =>
         {
@@ -33,9 +35,9 @@ public class AccountsModule : ICarterModule
                 return Results.BadRequest(result.ToApiResponse());
             }
 
-            return Results.NoContent();
+            return Results.Ok(result.ToApiResponse());
         })
         .Produces<ApiResponse<AuthTokenResponse>>()
-        .Produces<ApiResponse<AuthTokenResponse>>(StatusCodes.Status400BadRequest);;
+        .Produces<ApiResponse<AuthTokenResponse>>(StatusCodes.Status400BadRequest);
     }
 }

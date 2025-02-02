@@ -207,11 +207,12 @@ public class InspectionService : IInspectionService
     /// <summary>
     /// Adds a new inspection form to the database based on the provided request details.
     /// </summary>
+    /// <param name="inspectionId">Identifier of the inspection to which the form is related.</param>
     /// <param name="request">The details of the inspection form to be added, including attributes such as attendance, room suitability, final grade, and related inspection ID.</param>
     /// <returns>A Result object indicating success or failure. On success, the result contains a success message. On failure, it contains the error details.</returns>
-    public async Task<Result> AddFormAsync(AddInspectionFormRequest request)
+    public async Task<Result> AddFormAsync(int inspectionId, AddInspectionFormRequest request)
     {
-        var inspection = await _dbContext.Inspections.FirstOrDefaultAsync(h => h.Id == request.InspectionId);
+        var inspection = await _dbContext.Inspections.FirstOrDefaultAsync(h => h.Id == inspectionId);
         if (inspection == null)
         {
             return Result.Fail("Inspection not found");

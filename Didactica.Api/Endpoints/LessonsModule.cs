@@ -20,7 +20,7 @@ public class LessonsModule : ICarterModule
     /// <param name="app">An instance of <see cref="IEndpointRouteBuilder"/> used to define routes and endpoints.</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var endpoints = app.MapGroup("lessons");
+        var endpoints = app.MapGroup("lessons").WithTags("Lessons");
         endpoints.AddOpenApiSecurityRequirement();
 
         endpoints.MapGet("", async (IMediator mediator, [AsParameters] GetLessonsQuery query) =>

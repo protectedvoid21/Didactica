@@ -9,6 +9,6 @@ public class AddInspectionFormHandler(IInspectionService inspectionService)
 {
     public async Task<Result> Handle(AddInspectionFormCommand request, CancellationToken cancellationToken)
     {
-        return await inspectionService.AddFormAsync(request.Request);
+        return await inspectionService.AddFormAsync(request.InspectionId, request.Request);
     }
 }

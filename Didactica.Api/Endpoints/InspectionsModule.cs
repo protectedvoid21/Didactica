@@ -3,7 +3,11 @@ using Didactica.Api.Extensions;
 using Didactica.Application.Commands.Inspections;
 using Didactica.Application.Commands.Inspections.Add;
 using Didactica.Application.Common.Extensions;
+using Didactica.Application.Common.Models;
+using Didactica.Application.Utils;
+using Didactica.Domain.Services;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Didactica.Api.Endpoints;
@@ -20,7 +24,8 @@ public class InspectionsModule : ICarterModule
     /// <param name="app">The IEndpointRouteBuilder used to define and build the application endpoints.</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var endpoints = app.MapGroup("inspections");
+        var endpoints = app.MapGroup("inspections")
+            .WithTags("Inspections");
         endpoints.AddOpenApiSecurityRequirement();
 
         endpoints.MapPost("", async (IMediator mediator, AddInspectionCommand command) =>
@@ -50,9 +55,17 @@ public class InspectionsModule : ICarterModule
             var result = await mediator.Send(query);
             return Results.Ok(result.ToApiResponse());
         });
-
-        endpoints.MapGet("/planned", async (IMediator mediator,[AsParameters] GetPlannedInspectionsQuery query) =>
+        
+        endpoints.MapGet("/planned", async (
+            IMediator mediator, 
+            [FromServices] CurrentUser user, 
+            [FromServices] IPrivilegeService privilegeService,
+            [AsParameters] GetPlannedInspectionsQuery query) =>
         {
+            if (await privilegeService.IsUserInRoleAsync(user.Id, "Dean"))
+            {
+                return Results.Forbid();
+            }
             var result = await mediator.Send(query);
             return Results.Ok(result.ToApiResponse());
         });

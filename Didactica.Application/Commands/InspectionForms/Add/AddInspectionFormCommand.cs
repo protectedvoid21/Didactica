@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Didactica.Application.Commands.InspectionForms.Add;
 
-public record AddInspectionFormCommand(AddInspectionFormRequest Request) : IRequest<Result>;
+public record AddInspectionFormCommand(int InspectionId, AddInspectionFormRequest Request) : IRequest<Result>;

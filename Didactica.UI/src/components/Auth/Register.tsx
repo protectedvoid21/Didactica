@@ -27,7 +27,8 @@ export const Register = () => {
       return;
     }
 
-    navigate("/confirm-email", { replace: true });
+    enqueueSnackbar('Zostałeś zarejestrowany! Zaloguj się przy pomocy wcześniej podanych danych', { variant: 'success' });
+    navigate('/login');
   }
 
   return (

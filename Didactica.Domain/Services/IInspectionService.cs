@@ -14,5 +14,5 @@ public interface IInspectionService
     Task<Result> DeleteAsync(DeleteInspectionRequest request);
     Task<Result<IEnumerable<GetInspectionResponse>>> GetInspectionsOfTeacherById(int teacherId);    
     Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPlanedInspections();
-    Task<Result> AddFormAsync(AddInspectionFormRequest request);
+    Task<Result> AddFormAsync(int inspectionId, AddInspectionFormRequest request);
 }

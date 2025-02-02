@@ -26,7 +26,7 @@ public class TeachersModule : ICarterModule
     /// </param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var endpoints = app.MapGroup("teachers");
+        var endpoints = app.MapGroup("teachers").WithTags("Teachers");
         endpoints.AddOpenApiSecurityRequirement();
 
         endpoints.MapGet("", async (IMediator mediator, [AsParameters] GetTeachersQuery query) =>
