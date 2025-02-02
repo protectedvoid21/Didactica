@@ -50,9 +50,9 @@ public class AccountService : IAccountService
             return Result.Fail("Could not log in. Invalid username or password.");
         }
 
-        var isAdmin = await _userManager.IsInRoleAsync(user, RoleNames.Admin);
+        var userRoles = await _userManager.GetRolesAsync(user);
 
-        var bearerToken = _tokenService.GenerateAuthToken(user.UserName!, isAdmin);
+        var bearerToken = _tokenService.GenerateAuthToken(user.UserName!, userRoles.ToArray());
         var refreshToken = _tokenService.GenerateRefreshToken();
         
         _dbContext.Add(new RefreshToken

@@ -169,7 +169,7 @@ public class InspectionService : IInspectionService
             {
                 Id = h.InspectionTeam.Id,
                 Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray()}
-        }).Where(h => h.Id == teacherId).ToListAsync();
+        }).Where(h => h.TeacherId == teacherId).ToListAsync();
         return inspections;
     }
 

@@ -6,7 +6,7 @@ import { RadioScoreInput } from '../components/RadioScaleInput';
 import { useSnackbar } from 'notistack';
 import { InspectionFormRequest } from '../types';
 
-export const AddHospitation = () => {
+export const AddInspection = () => {
   const { control, handleSubmit, formState: { errors } } = useForm<InspectionFormRequest>();
   const { enqueueSnackbar } = useSnackbar();
 

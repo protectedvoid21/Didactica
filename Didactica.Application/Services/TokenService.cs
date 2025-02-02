@@ -39,7 +39,7 @@ public sealed class TokenService : ITokenService
             .ToArray();
     }
 
-    public string GenerateAuthToken(string username, bool isAdmin = false)
+    public string GenerateAuthToken(string username, string[] roleNames)
     {
         var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
 
@@ -48,10 +48,10 @@ public sealed class TokenService : ITokenService
         var id = Guid.NewGuid().ToString().GetHashCode().ToString("x", CultureInfo.InvariantCulture);
 
         identity.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, id));
-
-        if(isAdmin)
+        
+        foreach(var roleName in roleNames)
         {
-            identity.AddClaim(new Claim(ClaimTypes.Role, RoleNames.Admin));
+            identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
         }
 
         identity.AddClaims(_audiences);
