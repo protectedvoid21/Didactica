@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Didactica.Domain.Dto;
 using Didactica.Domain.Models;
 using Didactica.Domain.Models.Persistent;
@@ -37,7 +38,7 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<GetInspectionResponse>> GetAsync(int id)
     {
-        var inspection = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
+        var inspection = await _dbContext.Inspections.Select(InspectionExpression)
             .FirstOrDefaultAsync(h => h.Id == id);
         
         if (inspection == null)
@@ -63,7 +64,7 @@ public class InspectionService : IInspectionService
         
         var inspections = await _dbContext.Inspections
             .Where(h => h.Teacher.Id == teacherId)
-            .Select(i => MapInspectionToResponse(i))
+            .Select(InspectionExpression)
             .ToListAsync(ct);
         
         return Result.Ok(inspections);
@@ -125,7 +126,7 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<IEnumerable<GetInspectionResponse>>> GetInspectionsOfTeacherById(int teacherId)
     {
-        var inspections = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
+        var inspections = await _dbContext.Inspections.Select(InspectionExpression)
             .Where(h => h.TeacherId == teacherId)
             .ToListAsync();
         
@@ -142,8 +143,10 @@ public class InspectionService : IInspectionService
     /// </returns>
     public async Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPlannedInspections()
     {
-        var inspections = await _dbContext.Inspections.Select(i => MapInspectionToResponse(i))
-            .Where(h => h.Date > DateTime.UtcNow).ToListAsync();
+        var inspections = await _dbContext.Inspections
+            .Where(h => h.Lesson.Date > DateTime.UtcNow)
+            .Select(InspectionExpression)
+            .ToListAsync();
         
         return inspections;
     }
@@ -158,7 +161,7 @@ public class InspectionService : IInspectionService
         
         var inspections = await _dbContext.Inspections
             .Where(i => i.InspectionTeam != null && i.InspectionTeam.Teachers.Any(t => t.Id == teacherId) == true)
-            .Select(i => MapInspectionToResponse(i))
+            .Select(InspectionExpression)
             .ToListAsync();
         
         return inspections;
@@ -199,9 +202,8 @@ public class InspectionService : IInspectionService
         return Result.Ok().WithSuccess("Inspection form added successfully");
     }
     
-    private static GetInspectionResponse MapInspectionToResponse(Inspection inspection)
-    {
-        return new GetInspectionResponse
+    private static Expression<Func<Inspection, GetInspectionResponse>> InspectionExpression = inspection =>
+        new GetInspectionResponse
         {
             Id = inspection.Id,
             TeacherId = inspection.Teacher.Id,
@@ -227,7 +229,6 @@ public class InspectionService : IInspectionService
                     .ToArray(),
             },
             IsRated = inspection.InspectionForm != null,
-            InspectionFormId = inspection.InspectionForm?.Id ?? 0,
+            InspectionFormId = inspection.InspectionForm != null ? inspection.InspectionForm.Id : null,
         };
-    }
 }
