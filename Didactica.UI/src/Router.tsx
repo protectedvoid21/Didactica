@@ -11,32 +11,33 @@ import { InspectionsForTeam } from './pages/InspectionsForTeam';
 import { InspectionTeams } from './pages/InspectionTeams';
 
 const nonAuthRoutes = (
-  <>
-    <Route element={<NonAuthRoute />}>
-      <Route path="/login" element={<Auth />} />
-    </Route>
-  </>
+	<>
+		<Route element={<NonAuthRoute />}>
+			<Route path="/" element={<Auth />} />
+			<Route path="/login" element={<Auth />} />
+		</Route>
+	</>
 )
 
 const authRoutes = (
-  <>
-    <Route element={<ProtectedRoute />}>
-      <Route element={<Layout />}>
-        <Route path='/' element={<Home />} />
-        <Route path='*' element={<NotFound />} />
-        <Route path='/dodawanie-protokolu' element={<AddInspectionProtocol />} />
-        <Route path='/zaplanowane-hospitacje' element={<PlannedInspections />} />
-        <Route path='/hospitacje-komisja' element={<InspectionsForTeam />} />
-        <Route path='/zespoly-hospitacyjne' element={<InspectionTeams />} />
-      </Route>
-    </Route>
-  </>
+	<>
+		<Route element={<ProtectedRoute />}>
+			<Route element={<Layout />}>
+				<Route path='/' element={<Home />} />
+				<Route path='*' element={<NotFound />} />
+				<Route path='/dodawanie-protokolu' element={<AddInspectionProtocol />} />
+				<Route path='/zaplanowane-hospitacje' element={<PlannedInspections />} />
+				<Route path='/hospitacje-komisja' element={<InspectionsForTeam />} />
+				<Route path='/zespoly-hospitacyjne' element={<InspectionTeams />} />
+			</Route>
+		</Route>
+	</>
 );
 
 export const Router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      {nonAuthRoutes}
-      {authRoutes}
-    </>
-  ))
+	createRoutesFromElements(
+		<>
+			{nonAuthRoutes}
+			{authRoutes}
+		</>
+	))
