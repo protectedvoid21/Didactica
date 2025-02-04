@@ -1,4 +1,4 @@
-export const API_URL: string = "https://localhost:7282/";
+export const API_URL: string = import.meta.env.VITE_API_URL || "https://localhost:7282/"
 export const INSPECTION_TEAMS_URL: string = "inspection-teams";
 export const INSPECTION_FORMS_URL: string = "inspection-forms";
 export const INSPECTIONS_URL = "inspections";
