@@ -168,10 +168,8 @@ public class InspectionService : IInspectionService
             GetInspectionTeamResponse = new GetInspectionTeamResponse
             {
                 Id = h.InspectionTeam.Id,
-                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray()
-                
-            }
-        }).Where(h => h.TeacherId == teacherId).ToListAsync();
+                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray()}
+        }).Where(h => h.Id == teacherId).ToListAsync();
         return inspections;
     }
 
@@ -183,37 +181,28 @@ public class InspectionService : IInspectionService
     /// planned inspections. Each object includes details such as teacher information, course details,
     /// inspection time, location, and associated inspection team information.
     /// </returns>
- public async Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPlanedInspections()
-{
-    var inspections = await _dbContext.Inspections
-        .Where(h => h.Lesson.Date > DateTime.UtcNow)
-        .Select(h => new GetInspectionResponse
+    public async Task<Result<IEnumerable<GetInspectionResponse>>> GetAllPlanedInspections()
+    {
+        var inspections = await _dbContext.Inspections.Select(h => new GetInspectionResponse
         {
             Id = h.Id,
             TeacherId = h.Teacher.Id,
             TeacherFirstName = h.Teacher.Name,
             TeacherLastName = h.Teacher.LastName,
             Course = h.Lesson.Name,
-            CourseType = h.Lesson.LessonType != null ? h.Lesson.LessonType.Name : "Unknown",
+            CourseType = h.Lesson.LessonType.Name,
             Date = h.Lesson.Date,
             IsRemote = h.IsRemote,
             LessonEnvironment = h.LessonEnvironment,
             Place = h.Lesson.Room,
-            GetInspectionTeamResponse = h.InspectionTeam != null
-                ? new GetInspectionTeamResponse
-                {
-                    Id = h.InspectionTeam.Id,
-                    Teachers = h.InspectionTeam.Teachers
-                        .Select(t => new Tuple<int, string>(t.Id, $"{t.Name} {t.LastName}"))
-                        .ToArray(),
-                }
-                : null
-        })
-        .ToListAsync();
-
-    return Result.Ok<IEnumerable<GetInspectionResponse>>(inspections);
-}
-
+            GetInspectionTeamResponse = new GetInspectionTeamResponse
+            {
+                Id = h.InspectionTeam!.Id,
+                Teachers = h.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(t.Id, string.Join(" ", t.Name, t.LastName))).ToArray(),
+            }}).Where(h => h.Date > DateTime.UtcNow).ToListAsync();
+        
+        return inspections;
+    }
 
     /// <summary>
     /// Adds a new inspection form to the database based on the provided request details.
