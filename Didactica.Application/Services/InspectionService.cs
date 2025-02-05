@@ -215,7 +215,7 @@ public class InspectionService : IInspectionService
             IsRemote = inspection.IsRemote,
             LessonEnvironment = inspection.LessonEnvironment,
             Place = inspection.Lesson.Room,
-            GetInspectionTeamResponse = new GetInspectionTeamBasicResponse
+            GetInspectionTeamResponse = inspection.InspectionTeam != null ? new GetInspectionTeamBasicResponse
             {
                 Id = inspection.InspectionTeam!.Id,
                 Teachers = inspection.InspectionTeam.Teachers.Select(t => new Tuple<int, string>(
@@ -227,7 +227,7 @@ public class InspectionService : IInspectionService
                             t.Name,
                             t.LastName)))
                     .ToArray(),
-            },
+            } : null,
             IsRated = inspection.InspectionForm != null,
             InspectionFormId = inspection.InspectionForm != null ? inspection.InspectionForm.Id : null,
         };
